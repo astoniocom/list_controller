@@ -1,0 +1,1 @@
+class ColorDuplicate extends Error {}

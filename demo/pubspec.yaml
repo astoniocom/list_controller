@@ -1,0 +1,93 @@
+name: demo
+description: Demonstration of the list_controller library features.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  bidirectional_listview: ^1.0.3
+  carousel_slider: ^4.1.1
+  english_words: ^4.0.0
+  equatable: ^2.0.5
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.1
+  flutter_mobx: ^2.0.6+1
+  flutter_riverpod: ^1.0.4
+  go_router: ^4.3.0
+  indexed_list_view: ^2.0.2
+  infinite_listview: ^1.1.0
+  list_controller:
+    path: ../
+  mobx: ^2.0.7+4
+  mobx_codegen: ^2.0.7
+  mock_datasource:
+    path: ./mock_datasource
+  number_paginator: 0.1.0
+  provider: ^6.0.3
+  rxdart: ^0.27.4
+  shimmer: ^2.0.0
+  widget_with_codeview: ^2.0.1+2
+
+dev_dependencies:
+  bloc_test: ^9.1.0
+  build_runner: ^2.1.11
+  flutter_lints: ^2.0.1
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  test: ^1.20.2
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - lib/examples/actualizing/actualizing_list_controller.dart
+    - lib/examples/actualizing/actualizing_view.dart
+    - lib/examples/async_records_loading/async_records_loading_list_controller.dart
+    - lib/examples/async_records_loading/async_records_loading_view.dart
+    - lib/examples/basic/basic_list_controller.dart
+    - lib/examples/basic/basic_view.dart
+    - lib/examples/carousel_slider/carousel_slider_controller.dart
+    - lib/examples/carousel_slider/carousel_slider_view.dart
+    - lib/examples/complex_bidirectional_bloc_list/bloc/bidirectional_list_bloc.dart
+    - lib/examples/complex_bidirectional_bloc_list/bloc/bidirectional_list_state.dart
+    - lib/examples/complex_bidirectional_bloc_list/complex_bidirectional_bloc_list_view.dart
+    - lib/examples/complex_bloc_list/bloc/complex_list_bloc.dart
+    - lib/examples/complex_bloc_list/complex_bloc_list_view.dart
+    - lib/examples/complex_value_notifier_list/complex_value_notifier_list_controller.dart
+    - lib/examples/complex_value_notifier_list/complex_value_notifier_list_view.dart
+    - lib/examples/filtering_sorting/filtering_sorting_list_controller.dart
+    - lib/examples/filtering_sorting/filtering_sorting_view.dart
+    - lib/examples/hot_huge_list/hot_huge_list_controller.dart
+    - lib/examples/hot_huge_list/hot_huge_list_view.dart
+    - lib/examples/huge_list/huge_list_controller.dart
+    - lib/examples/huge_list/huge_list_view.dart
+    - lib/examples/isolate_loading/isolate_loading_list_controller.dart
+    - lib/examples/isolate_loading/isolate_loading_view.dart
+    - lib/examples/line_by_line_loading/line_by_line_loading_list_controller.dart
+    - lib/examples/line_by_line_loading/line_by_line_loading_view.dart
+    - lib/examples/keyset_pagination_bloc_list/bloc/keyset_pagination_list_bloc.dart
+    - lib/examples/keyset_pagination_bloc_list/bloc/keyset_pagination_list_events.dart
+    - lib/examples/keyset_pagination_bloc_list/bloc/keyset_pagination_list_query.dart
+    - lib/examples/keyset_pagination_bloc_list/keyset_pagination_bloc_list_view.dart
+    - lib/examples/keyset_pagination_value_notifier_list/keyset_pagination_value_notifier_list_controller.dart
+    - lib/examples/keyset_pagination_value_notifier_list/keyset_pagination_value_notifier_list_view.dart
+    - lib/examples/keyset_pagination_mobx_list/keyset_pagination_mobx_list_controller.dart
+    - lib/examples/keyset_pagination_mobx_list/keyset_pagination_mobx_list_view.dart
+    - lib/examples/keyset_pagination_statefull_widget/keyset_pagination_statefull_widget.dart
+    - lib/examples/offset_pagination_list/offset_pagination_list_controller.dart
+    - lib/examples/offset_pagination_list/offset_pagination_list_view.dart
+    - lib/examples/offset_pagination_splitted_list/offset_pagination_splitted_list_controller.dart
+    - lib/examples/offset_pagination_splitted_list/offset_pagination_splitted_list_view.dart
+    - lib/examples/record_tracking/record_tracking_list_controller.dart
+    - lib/examples/record_tracking/record_tracking_view.dart
+    - lib/examples/related_records_list/related_records_list_controller.dart
+    - lib/examples/related_records_list/related_records_list_view.dart
+    - lib/examples/repeating_queries/repeating_queries_list_controller.dart
+    - lib/examples/repeating_queries/repeating_queries_view.dart
