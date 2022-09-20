@@ -139,10 +139,15 @@ mixin HotList<Key, Event, DecisionRecord, Record> on ListCore<Record> {
   /// Must be called in the constructor
   void initHotList(Stream<Event> changes) {
     _curReplaceOperationId = replaceOperationId;
-    hotListEventSubscription =
-        changes.bufferCompleter(waitAllLoadsToComplete).asyncMap((event) async {
-      // At this point no load operations are running due to
-      // waitAllLoadingCompleters.
+    hotListEventSubscription = changes
+        .bufferCompleter(() async => Future.wait([
+              waitAllLoadsToComplete(),
+              if (actualizeCompleter?.isCompleted == false)
+                actualizeCompleter!.future,
+            ]))
+        .asyncMap((event) async {
+      // At this point, no loading or actualizing operations are performed
+      // because of bufferCompleter.
       _curReplaceOperationId = replaceOperationId;
       actualizeCompleter = Completer();
 

@@ -220,6 +220,33 @@ void main() {
   });
 
   test(
+      'HotList does not process, but buffers events while the list is being'
+      ' actualized', () async {
+    final eventController = StreamController<RecordEvent>();
+    final stream = eventController.stream.asBroadcastStream();
+
+    final controller = MockHotListController()..initHotList(stream);
+
+    when(controller.convertDecisionRecords({1})).thenAnswer((realInvocation) =>
+        Future.delayed(const Duration(milliseconds: 50)).then((value) => {1}));
+
+    eventController.add(const RecordCreatedEvent(1));
+
+    await untilCalled(controller.convertDecisionRecords({1}));
+
+    eventController.add(const RecordCreatedEvent(2));
+    await Future.delayed(Duration.zero);
+
+    verifyNever(controller.expandHotListEvents([const RecordCreatedEvent(2)]));
+
+    await untilCalled(controller.updateHotList(
+        const HotListChanges(recordKeysToRemove: {}, recordsToInsert: {1})));
+    await untilCalled(controller.updateHotList(
+        const HotListChanges(recordKeysToRemove: {}, recordsToInsert: {2})));
+    eventController.close();
+  });
+
+  test(
       'HotList breaks events processing (does not call '
       '[convertDecisionRecords]) when [expandHotListEvents] throws exception.',
       () async {
