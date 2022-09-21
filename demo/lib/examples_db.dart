@@ -1,4 +1,5 @@
 import 'package:demo/examples/actualizing/actualizing_view.dart';
+import 'package:demo/examples/animated_list/animated_list_view.dart';
 import 'package:demo/examples/async_records_loading/async_records_loading_view.dart';
 import 'package:demo/examples/basic/basic_view.dart';
 import 'package:demo/examples/carousel_slider/carousel_slider_view.dart';
@@ -240,6 +241,17 @@ final List<Example> examples = [
     sources: const [
       SourceFile(title: 'Controller', codeFile: 'lib/examples/carousel_slider/carousel_slider_controller.dart'),
       SourceFile(title: 'View', codeFile: 'lib/examples/carousel_slider/carousel_slider_view.dart'),
+    ],
+  ),
+  Example(
+    title: 'Animated list',
+    description: "Demonstrates the list controller's work with the AnimatedList widget.",
+    usedFeatures: ['ValueNotifier', 'RecordsLoader', 'HotList', 'AnimatedList'],
+    builder: (e, _) => AnimatedListExample(title: e.title, sources: e.sources),
+    slug: 'animated_list',
+    sources: const [
+      SourceFile(title: 'Controller', codeFile: 'lib/examples/animated_list/animated_list_controller.dart'),
+      SourceFile(title: 'View', codeFile: 'lib/examples/animated_list/animated_list_view.dart'),
     ],
   ),
   Example(

@@ -3,7 +3,7 @@ description: Demonstration of the list_controller library features.
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.1+1
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -49,6 +49,8 @@ flutter:
   assets:
     - lib/examples/actualizing/actualizing_list_controller.dart
     - lib/examples/actualizing/actualizing_view.dart
+    - lib/examples/animated_list/animated_list_controller.dart
+    - lib/examples/animated_list/animated_list_view.dart
     - lib/examples/async_records_loading/async_records_loading_list_controller.dart
     - lib/examples/async_records_loading/async_records_loading_view.dart
     - lib/examples/basic/basic_list_controller.dart

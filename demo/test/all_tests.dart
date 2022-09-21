@@ -1,4 +1,5 @@
 import 'examples/actualizing_test.dart' as actualizing_test;
+import 'examples/animated_list_test.dart' as animated_list_test;
 import 'examples/complex_bidirectional_bloc_list_test.dart' as complex_bidirectional_bloc_list_test;
 import 'examples/complex_bloc_list_test.dart' as complex_bloc_list_test;
 import 'examples/complex_value_notifier_list_test.dart' as complex_value_notifier_list_test;
@@ -27,6 +28,7 @@ import 'widgets/search_field_test.dart' as search_field_test;
 
 void main() {
   actualizing_test.main();
+  animated_list_test.main();
   complex_bidirectional_bloc_list_test.main();
   complex_bloc_list_test.main();
   complex_value_notifier_list_test.main();
