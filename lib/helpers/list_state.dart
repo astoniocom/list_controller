@@ -3,44 +3,39 @@ import 'package:list_controller/list_controller.dart';
 import 'package:meta/meta.dart';
 
 /// Stores basic information about the list state.
-@immutable
 class ListStateMeta {
   /// Creates a description of a list state.
-  ListStateMeta({
+  const ListStateMeta({
     required this.isEmpty,
     required this.stage,
     required this.isInitialized,
-  }) {
-    if (isInitialized && isEmpty && stage != ListStage.complete()) {
-      throw const WrongListStateException(
-          'List is empty but has stage marker other than CompleteListStage');
-    }
-  }
-
+  });
+  
+  /// {@template list_controller.helpers.ListStateMeta.isEmpty}
   /// Whether the list has no records.
+  /// {@endtemplate}
   final bool isEmpty;
 
+  /// {@template list_controller.helpers.ListStateMeta.stage}
   /// Stage the list is at.
+  /// {@endtemplate}
   final ListStage stage;
 
+  /// {@template list_controller.helpers.ListStateMeta.isInitialized}
   /// Whether the list is initialized.
+  /// {@endtemplate}
   final bool isInitialized;
 }
 
 /// Stores the list state.
 @immutable
-class ListState<Record, Query> extends ListStateMeta {
+class ListState<Record, Query> implements ListStateMeta {
   /// Creates a list state.
-  ListState({
+  const ListState({
     required this.query,
     List<Record>? records,
-    ListStage stage = const IdleListStage(),
-  })  : recordsStore = records,
-        super(
-          stage: stage,
-          isInitialized: records != null,
-          isEmpty: records?.isEmpty ?? true,
-        );
+    this.stage = const IdleListStage(),
+  }) : recordsStore = records;
 
   /// Stores list records.
   ///
@@ -50,6 +45,9 @@ class ListState<Record, Query> extends ListStateMeta {
 
   /// Description of the criteria of the records included in the list.
   final Query query;
+
+  @override
+  final ListStage stage;
 
   /// Creates a copy of this list state but with the given fields replaced with
   /// the new values.
@@ -85,6 +83,14 @@ class ListState<Record, Query> extends ListStateMeta {
         query == other.query &&
         stage == other.stage;
   }
+
+  /// {@macro list_controller.helpers.ListStateMeta.isEmpty}
+  @override
+  bool get isEmpty => records.isEmpty;
+
+  /// {@macro list_controller.helpers.ListStateMeta.isInitialized}
+  @override
+  bool get isInitialized => recordsStore != null;
 
   @override
   String toString() {
