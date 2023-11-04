@@ -9,7 +9,7 @@ class ActualizingListController extends ValueNotifier<ExListState>
         ListCore<ExampleRecord>,
         RecordsLoader<ExampleRecord, ExampleRecordQuery, List<ExampleRecord>>,
         HotList<int, ExampleRecordEvent, ExampleRecord, ExampleRecord> {
-  ActualizingListController(this.repository) : super(ExListState(query: const ExampleRecordQuery(weightLte: 100))) {
+  ActualizingListController(this.repository) : super(const ExListState(query: ExampleRecordQuery(weightLte: 100))) {
     loadRecords(value.query);
 
     initHotList(repository.dbEvents);

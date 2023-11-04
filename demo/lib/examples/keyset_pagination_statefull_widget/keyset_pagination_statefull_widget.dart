@@ -34,7 +34,7 @@ class KeysetPaginationStatefullWidgetExample extends StatefulWidget {
 
 class _KeysetPaginationStatefullWidgetExampleState extends State<KeysetPaginationStatefullWidgetExample>
     with ListCore<int>, RecordsLoader<int, ListQuery, LoadResult>, KeysetPagination<int, ListQuery, LoadResult> {
-  StatefullListState state = StatefullListState(query: const ListQuery());
+  StatefullListState state = const StatefullListState(query: ListQuery());
 
   @override
   void initState() {

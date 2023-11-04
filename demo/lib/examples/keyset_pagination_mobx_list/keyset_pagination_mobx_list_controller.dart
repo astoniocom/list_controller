@@ -33,7 +33,7 @@ abstract class KeysetPaginationMobxListControllerBase
   static const LoadingKey forwardLoadingKey = 'forward_load';
 
   @observable
-  MobxListState state = MobxListState(query: const ListQuery());
+  MobxListState state = const MobxListState(query: ListQuery());
 
   // RecordsLoader section:
 

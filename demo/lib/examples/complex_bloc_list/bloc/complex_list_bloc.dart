@@ -18,7 +18,7 @@ class ComplexListBloc extends Bloc<ListEvent, ExListState>
     ExListState? initialState,
     this.expandRecordsDelay = Duration.zero,
     bool initLoad = true, // for testing
-  }) : super(initialState ?? ExListState(query: const ExampleRecordQuery())) {
+  }) : super(initialState ?? const ExListState(query: ExampleRecordQuery())) {
     on<ResetEvent<ExampleRecordQuery>>(_onReset);
     on<RecordsLoadStartEvent<ExampleRecordQuery>>(_onRecordsLoadStart);
     on<LoadingErrorEvent<ExampleRecordQuery>>(_onLoadingError);

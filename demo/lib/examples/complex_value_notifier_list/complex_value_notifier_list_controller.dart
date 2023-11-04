@@ -18,7 +18,7 @@ class ComplexListController extends ValueNotifier<ExListState>
     required this.repository,
     ExListState? initialState,
     bool initLoad = true, // for testing
-  }) : super(initialState ?? ExListState(query: const ExampleRecordQuery())) {
+  }) : super(initialState ?? const ExListState(query: ExampleRecordQuery())) {
     addListener(_changeListener); // for testing
     initHotList(repository.dbEvents);
 

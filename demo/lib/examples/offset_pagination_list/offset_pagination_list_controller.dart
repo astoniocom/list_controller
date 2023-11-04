@@ -37,7 +37,7 @@ const totalRecords = 100;
 
 class OffsetPaginationListController extends ValueNotifier<ExListState>
     with ListCore<int>, RecordsLoader<int, ListQuery, LoadResult>, OffsetPagination<int, ListQuery, LoadResult, int> {
-  OffsetPaginationListController() : super(ExListState(query: const ListQuery())) {
+  OffsetPaginationListController() : super(const ExListState(query: ListQuery())) {
     loadRecords(value.query);
   }
 

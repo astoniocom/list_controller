@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage>
         ListCore<int>,
         RecordsLoader<int, ListQuery, LoadResult>,
         KeysetPagination<int, ListQuery, LoadResult> {
-  ListStateExample state = ListStateExample(query: const ListQuery());
+  ListStateExample state = const ListStateExample(query: ListQuery());
 
   @override
   void initState() {

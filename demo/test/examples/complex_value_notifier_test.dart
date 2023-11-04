@@ -226,7 +226,7 @@ void main() {
     const searchString = 'es';
     final db = MockDatabase();
     final listController = ComplexListController(
-      initialState: ExListState(query: const ExampleRecordQuery(contains: searchString)),
+      initialState: const ExListState(query: ExampleRecordQuery(contains: searchString)),
       repository: db.exampleRecordRepository,
       settings: SettingsController(settings: const Settings(responseDelay: defaultFetchRecordsDelay)),
     );
@@ -251,7 +251,7 @@ void main() {
     const searchString = 'es';
     final db = MockDatabase();
     final listController = ComplexListController(
-      initialState: ExListState(query: const ExampleRecordQuery(contains: searchString)),
+      initialState: const ExListState(query: ExampleRecordQuery(contains: searchString)),
       repository: db.exampleRecordRepository,
       settings: SettingsController(settings: const Settings(responseDelay: defaultFetchRecordsDelay)),
     );

@@ -24,7 +24,7 @@ typedef ExListState = ListState<int, ListQuery>;
 
 class RepeatingQueriesListController extends ValueNotifier<ExListState>
     with ListCore<int>, RecordsLoader<int, ListQuery, LoadResult>, KeysetPagination<int, ListQuery, LoadResult> {
-  RepeatingQueriesListController() : super(ListState(query: const ListQuery())) {
+  RepeatingQueriesListController() : super(const ListState(query: ListQuery())) {
     loadRecords(const ListQuery());
   }
 

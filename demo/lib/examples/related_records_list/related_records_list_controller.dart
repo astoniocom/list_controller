@@ -17,7 +17,7 @@ class RelatedRecordsListController extends ValueNotifier<ExListState>
     required this.settings,
     required this.repository,
     ExListState? initialState,
-  }) : super(initialState ?? ExListState(query: const ExampleRecordQuery())) {
+  }) : super(initialState ?? const ExListState(query: ExampleRecordQuery())) {
     initHotList(repository.dbEvents);
 
     loadRecords(value.query);

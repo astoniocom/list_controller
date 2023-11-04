@@ -338,7 +338,7 @@ void main() {
     build: () {
       final db = MockDatabase(recodsNum: 100);
       return ComplexListBloc(
-        initialState: ExListState(query: const ExampleRecordQuery(contains: 'e')),
+        initialState: const ExListState(query: ExampleRecordQuery(contains: 'e')),
         repository: db.exampleRecordRepository,
         settings: SettingsController(settings: const Settings(responseDelay: defaultFetchRecordsDelay)),
       );
@@ -371,7 +371,7 @@ void main() {
     build: () {
       final db = MockDatabase();
       return ComplexListBloc(
-        initialState: ExListState(query: const ExampleRecordQuery(contains: searchString)),
+        initialState: const ExListState(query: ExampleRecordQuery(contains: searchString)),
         repository: db.exampleRecordRepository,
         settings: SettingsController(settings: const Settings(responseDelay: defaultFetchRecordsDelay)),
       );
