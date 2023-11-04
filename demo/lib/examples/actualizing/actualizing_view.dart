@@ -24,8 +24,10 @@ class ActualizingExample extends StatelessWidget {
     try {
       await db.exampleRecordRepository.createRecord(title: _randomNoun(), weight: weight);
     } on WeightDuplicate {
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Weight duplicate: $weight')));
     } on RecordDoesNotExist {
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('RecordDoesNotExist exception')));
     }
   }

@@ -91,6 +91,7 @@ class _RecordEditScreenState extends State<RecordEditScreen> {
             colorId: () => _brandColor,
           );
         } on RecordDoesNotExist {
+          if (!mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             key: RecordEditScreen.recordDeosNotExistSnackbarKey,
             content: Text('Record does not exist'),
@@ -99,6 +100,7 @@ class _RecordEditScreenState extends State<RecordEditScreen> {
       }
       navigator.pop();
     } on WeightDuplicate {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         key: RecordEditScreen.weightNotUniqueSnackbarKey,
         content: Text('Weight must be unique'),

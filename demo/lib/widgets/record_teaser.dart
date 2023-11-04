@@ -21,6 +21,7 @@ class RecordTeaser extends StatelessWidget {
             raiseException: context.read<SettingsController>().isRaiseException,
           );
     } on RecordDoesNotExist {
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Record does not exist')));
     }
   }
