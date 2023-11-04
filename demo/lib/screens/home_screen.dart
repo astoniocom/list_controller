@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({required this.examples, super.key});
+  HomeScreen({
+    required this.examples,
+    super.key,
+  });
 
   final List<Example> examples;
+  final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +18,9 @@ class HomeScreen extends StatelessWidget {
       body: Scrollbar(
         thumbVisibility: true,
         interactive: true,
+        controller: _scrollController,
         child: ListView(
+          controller: _scrollController,
           children: examples
               .map((e) => ListTile(
                     title: Text(e.title),
