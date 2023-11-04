@@ -9,11 +9,10 @@ class SourceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final location = GoRouterState.of(context).uri;
     if (sources.length == 1) {
-      final router = GoRouter.of(context);
-      return IconButton(onPressed: () => context.go('${router.location}/code/${sources.first.slug}'), icon: const Icon(Icons.code));
+      return IconButton(onPressed: () => context.go('$location/code/${sources.first.slug}'), icon: const Icon(Icons.code));
     } else if (sources.isNotEmpty) {
-      final router = GoRouter.of(context);
       const BoxConstraints unadjustedConstraints = BoxConstraints(
         minWidth: kMinInteractiveDimension,
         minHeight: kMinInteractiveDimension,
@@ -24,7 +23,7 @@ class SourceButton extends StatelessWidget {
       return ConstrainedBox(
         constraints: adjustedConstraints,
         child: PopupMenuButton<String>(
-          onSelected: (slug) => context.go('${router.location}/code/$slug'),
+          onSelected: (slug) => context.go('$location/code/$slug'),
           itemBuilder: (context) => sources
               .map((e) => PopupMenuItem<String>(
                     value: e.slug,

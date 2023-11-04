@@ -3,6 +3,7 @@ import 'package:demo/main.dart';
 import 'package:demo/widgets/source_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widget_with_codeview/widget_with_codeview.dart';
 
 Widget buildScreen() => ExampleApp(examples: examples);
 
@@ -37,7 +38,7 @@ void main() {
         final codeMenuItemsCount = codeMenuItems.evaluate().length;
 
         if (codeMenuItemsCount == 0) {
-          expect(find.byType(SelectableText), findsOneWidget);
+          expect(find.byType(WidgetWithCodeView), findsOneWidget);
           await tester.pageBack();
           await tester.pumpAndSettle();
         } else {
@@ -49,7 +50,7 @@ void main() {
             final menuItem = codeMenuItems.at(m);
             await tester.tap(menuItem);
             await tester.pumpAndSettle();
-            expect(find.byType(SelectableText), findsOneWidget);
+            expect(find.byType(WidgetWithCodeView), findsOneWidget);
             await tester.pageBack();
             await tester.pumpAndSettle();
           }

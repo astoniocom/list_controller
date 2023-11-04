@@ -288,7 +288,7 @@ Future<void> updateRecordAfterLoading(WidgetTester tester, Widget Function() bui
   expect(find.byType(ListStatusIndicator), findsNothing);
 
   // The teaser shold be new one
-  expect((find.byType(RecordTeaser).evaluate().map((e) => (e.widget as RecordTeaser).record).where((record) => record.id == recordToCheck.id).first).title,
+  expect(find.byType(RecordTeaser).evaluate().map((e) => (e.widget as RecordTeaser).record).where((record) => record.id == recordToCheck.id).first.title,
       testText);
 }
 
