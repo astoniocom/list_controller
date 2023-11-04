@@ -1,4 +1,3 @@
-import 'package:list_controller/exceptions.dart';
 import 'package:list_controller/helpers/list_state.dart';
 import 'package:list_controller/helpers/utils.dart';
 import 'package:list_controller/list_stages.dart';
@@ -10,15 +9,15 @@ void main() {
   });
 
   test('ListState [records]', () {
-    expect(ListState(query: 1).records, []);
+    expect(const ListState(query: 1).records, []);
   });
 
   test('ListState [isInitialized] is false', () {
-    expect(ListState(query: 1).isInitialized, isFalse);
+    expect(const ListState(query: 1).isInitialized, isFalse);
   });
 
   test('ListState [isInitialized] is true', () {
-    expect(ListState(query: 1, records: const [1, 2, 3]).isInitialized, isTrue);
+    expect(const ListState(query: 1, records: [1, 2, 3]).isInitialized, isTrue);
   });
 
   test('ListState [isLoading]', () {
@@ -26,20 +25,21 @@ void main() {
   });
 
   test('ListState [toString]', () {
-    expect(ListState(query: 1).toString().contains('ListState('), isTrue);
+    expect(const ListState(query: 1).toString().contains('ListState('), isTrue);
   });
 
   test('ListState equality', () {
-    expect(ListState(query: 1), ListState(query: 1));
+    expect(const ListState(query: 1), const ListState(query: 1));
   });
 
   test('ListState [hashCode]', () {
-    expect(ListState(query: 1).hashCode, isNot(ListState(query: 2).hashCode));
+    expect(const ListState(query: 1).hashCode,
+        isNot(const ListState(query: 2).hashCode));
   });
 
   test('ListState [copyWith]', () {
     expect(
-        ListState<int, int>(query: 1).copyWith(
+        const ListState<int, int>(query: 1).copyWith(
             records: const [1, 2, 3], query: 2, stage: ListStage.error()),
         ListState(
             records: const [1, 2, 3], query: 2, stage: ListStage.error()));
@@ -51,10 +51,5 @@ void main() {
             .copyWith(),
         ListState(
             records: const [1, 2, 3], query: 2, stage: ListStage.error()));
-  });
-
-  test('ListState constructor throws [WrongListStateException]', () {
-    expect(() => ListState(query: 1, records: const []),
-        throwsA(const TypeMatcher<WrongListStateException>()));
   });
 }
