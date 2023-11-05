@@ -470,6 +470,25 @@ void main() {
       ));
     });
 
+    test(
+        'does not call [putLoadResultToState] if the controller is closed '
+        'during the loading', () async {
+      controller
+        ..loadRecords(1)
+        ..closeList();
+      await Future.delayed(Duration.zero);
+      verify(controller.performLoadQuery(
+        query: captureThat(anything, named: 'query'),
+        loadingKey: RecordsLoader.defaultLoadingKey,
+      )).called(1);
+
+      verifyNever(controller.putLoadResultToState(
+        query: captureThat(anything, named: 'query'),
+        loadResult: captureThat(anything, named: 'loadResult'),
+        loadingKey: RecordsLoader.defaultLoadingKey,
+      ));
+    });
+
     test('calls [performLoadingQuery] after [loadRecords] calling', () async {
       controller.loadRecords(1);
 
