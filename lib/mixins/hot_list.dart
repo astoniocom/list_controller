@@ -56,8 +56,8 @@ class HotListChanges<Record, Key> {
   bool get isEmpty => recordsToInsert.isEmpty && recordKeysToRemove.isEmpty;
 
   @override
-  String toString() => 'HotListChanges(recordsToInsert:$recordsToInsert, '
-      'recordsToRemove:$recordKeysToRemove)';
+  String toString() => 'HotListChanges(recordsToInsert: $recordsToInsert, '
+      'recordsToRemove: $recordKeysToRemove)';
 }
 
 /// Describes changes in the data source.

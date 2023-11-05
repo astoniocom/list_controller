@@ -34,6 +34,9 @@ class ResetEvent<Query> extends ListEvent {
 
     return other is ResetEvent<Query> && query == other.query;
   }
+
+  @override
+  String toString() => 'ResetEvent(query: $query)';
 }
 
 /// Initiates the loading of records.
@@ -66,6 +69,11 @@ class LoadRecordsEvent<Query> extends ListEvent {
         query == other.query &&
         loadingKey == other.loadingKey;
   }
+
+  @override
+  String toString() => 'LoadRecordsEvent('
+      'loadingKey: $loadingKey, '
+      'query: $query)';
 }
 
 /// The event must be called from the overridden function
@@ -97,6 +105,11 @@ class RecordsLoadStartEvent<Query> extends ListEvent {
         query == other.query &&
         loadingKey == other.loadingKey;
   }
+
+  @override
+  String toString() => 'RecordsLoadStartEvent('
+      'loadingKey: $loadingKey, '
+      'query: $query)';
 }
 
 /// The event can be used when an error occurs in the overridden
@@ -135,6 +148,12 @@ class LoadingErrorEvent<Query> extends ListEvent {
         loadingKey == other.loadingKey &&
         error == other.error;
   }
+
+  @override
+  String toString() => 'LoadingErrorEvent('
+      'loadingKey: $loadingKey, '
+      'query: $query, '
+      'error: $error)';
 }
 
 /// The event must be called from the overridden function
@@ -166,6 +185,11 @@ class RecordsLoadCancelEvent<Query> extends ListEvent {
         query == other.query &&
         loadingKey == other.loadingKey;
   }
+
+  @override
+  String toString() => 'RecordsLoadCancelEvent('
+      'loadingKey: $loadingKey, '
+      'query: $query)';
 }
 
 /// The event must be called from the overridden function
@@ -203,6 +227,12 @@ class PutLoadResultToStateEvent<Query, LoadResult> extends ListEvent {
         loadingKey == other.loadingKey &&
         loadResult == other.loadResult;
   }
+
+  @override
+  String toString() => 'PutLoadResultToStateEvent('
+      'loadingKey: $loadingKey, '
+      'query: $query, '
+      'loadResult: $loadResult)';
 }
 
 /// Triggers the reloading of records in case the previous attempt failed.
@@ -229,6 +259,10 @@ class RepeatQueryEvent extends ListEvent {
 
     return other is RepeatQueryEvent && loadingKey == other.loadingKey;
   }
+
+  @override
+  String toString() => 'RepeatQueryEvent('
+      'loadingKey: $loadingKey)';
 }
 
 /// Initiates a rerun of all failed loadings.
@@ -247,6 +281,9 @@ class RepeatUnsuccessfulQueriesEvent extends ListEvent {
 
     return other is RepeatUnsuccessfulQueriesEvent;
   }
+
+  @override
+  String toString() => 'RepeatUnsuccessfulQueriesEvent()';
 }
 
 /// Triggers the loading of the next page of records.
@@ -269,6 +306,9 @@ class LoadNextPageEvent extends ListEvent {
 
     return other is LoadNextPageEvent;
   }
+
+  @override
+  String toString() => 'LoadNextPageEvent()';
 }
 
 /// Triggers the loading of the next page of records.
@@ -296,6 +336,10 @@ class LoadNextPageDirectedEvent extends ListEvent {
 
     return other is LoadNextPageDirectedEvent && loadingKey == other.loadingKey;
   }
+
+  @override
+  String toString() => 'LoadNextPageDirectedEvent('
+      'loadingKey: $loadingKey)';
 }
 
 /// The event must be called from an overridden function
@@ -319,4 +363,8 @@ class UpdateHotListEvent<Record, Key> extends ListEvent {
 
     return other is UpdateHotListEvent<Record, Key> && changes == other.changes;
   }
+
+  @override
+  String toString() => 'UpdateHotListEvent('
+      'changesCount: $changes)';
 }

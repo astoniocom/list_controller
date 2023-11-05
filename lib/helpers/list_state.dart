@@ -10,7 +10,7 @@ class ListStateMeta {
     required this.stage,
     required this.isInitialized,
   });
-  
+
   /// {@template list_controller.helpers.ListStateMeta.isEmpty}
   /// Whether the list has no records.
   /// {@endtemplate}
@@ -94,7 +94,7 @@ class ListState<Record, Query> implements ListStateMeta {
 
   @override
   String toString() {
-    return 'ListState(isInitialized=$isInitialized, stage=$stage, '
-        'recordsLen=${records.length})';
+    return 'ListState(isInitialized: $isInitialized, stage: $stage, '
+        'recordsLen: ${records.length})';
   }
 }

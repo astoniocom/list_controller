@@ -58,7 +58,7 @@ class BidirectionalListState<Record, Query> {
 
   @override
   String toString() {
-    return 'BidirectionalListState(recordsLength=$listLength, cachedLength=${records.length}, '
-        'isInitialized=$isInitialized, backwardStage=$backwardStage, forwardStage=$forwardStage)';
+    return 'BidirectionalListState(recordsLength: $listLength, cachedLength: ${records.length}, '
+        'isInitialized: $isInitialized, backwardStage: $backwardStage, forwardStage: $forwardStage)';
   }
 }

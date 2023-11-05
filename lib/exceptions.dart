@@ -14,7 +14,7 @@ class InterruptLoading implements Exception {
 
   @override
   String toString() {
-    return message != null ? 'InterruptLoading: $message' : 'InterruptLoading';
+    return message != null ? 'InterruptLoading($message)' : 'InterruptLoading';
   }
 }
 
@@ -30,7 +30,7 @@ class WrongListStateException implements Exception {
   @override
   String toString() {
     return message != null
-        ? 'WrongListStateException: $message'
+        ? 'WrongListStateException($message)'
         : 'WrongListStateException';
   }
 }
@@ -48,7 +48,7 @@ class UnexpectedLoadingKeyException implements Exception {
   @override
   String toString() {
     return message != null
-        ? 'UnexpectedLoadingKeyException: $message'
+        ? 'UnexpectedLoadingKeyException($message)'
         : 'UnexpectedLoadingKeyException';
   }
 }

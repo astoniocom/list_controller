@@ -5,7 +5,7 @@ void main() {
   test('InterruptLoading exception represents itself with message', () {
     const message = 'test message';
     expect(const InterruptLoading(message).toString(),
-        'InterruptLoading: $message');
+        'InterruptLoading($message)');
   });
 
   test('InterruptLoading exception represents itself without message', () {
@@ -15,7 +15,7 @@ void main() {
   test('WrongListStateException represents itself with message', () {
     const message = 'test message';
     expect(const WrongListStateException(message).toString(),
-        'WrongListStateException: $message');
+        'WrongListStateException($message)');
   });
 
   test('WrongListStateException represents itself without message', () {
@@ -26,7 +26,7 @@ void main() {
   test('UnexpectedLoadingKeyException represents itself with message', () {
     const message = 'test message';
     expect(const UnexpectedLoadingKeyException(message).toString(),
-        'UnexpectedLoadingKeyException: $message');
+        'UnexpectedLoadingKeyException($message)');
   });
 
   test('UnexpectedLoadingKeyException represents itself without message', () {
