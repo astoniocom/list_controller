@@ -4,3 +4,4 @@ linter:
   rules:
     use_super_parameters: true
     public_member_api_docs: false
+    diagnostic_describe_all_properties: false
