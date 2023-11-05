@@ -130,7 +130,7 @@ void main() {
     test('queryRecords test exception', () async {
       const query = ExampleRecordQuery();
 
-      expectLater(
+      await expectLater(
           db.exampleRecordRepository
               .queryRecords(query, batchSize: 10, raiseException: true),
           throwsA(const TypeMatcher<TestException>()));
@@ -146,33 +146,33 @@ void main() {
     });
 
     test('createRecord test exception', () async {
-      expectLater(
+      await expectLater(
           db.exampleRecordRepository
               .createRecord(title: 'test', weight: 1, raiseException: true),
           throwsA(const TypeMatcher<TestException>()));
     });
 
     test('updateRecord test exception', () async {
-      expectLater(
+      await expectLater(
           db.exampleRecordRepository
               .updateRecord(1, title: 'test', weight: 1, raiseException: true),
           throwsA(const TypeMatcher<TestException>()));
     });
 
     test('updateRecord RecordDoesNotExist', () async {
-      expectLater(
+      await expectLater(
           db.exampleRecordRepository.updateRecord(-1, title: 'test', weight: 1),
           throwsA(const TypeMatcher<RecordDoesNotExist>()));
     });
 
     test('deleteRecord test exception', () async {
-      expectLater(
+      await expectLater(
           db.exampleRecordRepository.deleteRecord(1, raiseException: true),
           throwsA(const TypeMatcher<TestException>()));
     });
 
     test('deleteRecord RecordDoesNotExist', () async {
-      expectLater(db.exampleRecordRepository.deleteRecord(-1),
+      await expectLater(db.exampleRecordRepository.deleteRecord(-1),
           throwsA(const TypeMatcher<RecordDoesNotExist>()));
     });
 

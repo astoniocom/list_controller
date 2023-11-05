@@ -65,7 +65,7 @@ void main() {
       if (i == 0) {
         final t1 = finder.at(0).evaluate().first.widget;
         for (int a = 0; a < 20; a++) {
-          await tester.drag(find.byType(Scrollable), const Offset(0.0, -56));
+          await tester.drag(find.byType(Scrollable), const Offset(0, -56));
           await tester.pump();
           final t2 = finder.at(0).evaluate().first.widget;
 
@@ -108,7 +108,7 @@ void main() {
       if (i == 0) {
         final t1 = finder.at(0).evaluate().first.widget;
         for (int a = 0; a < 20; a++) {
-          await tester.drag(find.byType(Scrollable), const Offset(0.0, -56));
+          await tester.drag(find.byType(Scrollable), const Offset(0, -56));
           await tester.pump();
           final t2 = finder.at(0).evaluate().first.widget;
 

@@ -1,4 +1,7 @@
 @TestOn('!vm')
+
+library isolate_loading_test;
+
 import 'package:demo/examples/isolate_loading/isolate_loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

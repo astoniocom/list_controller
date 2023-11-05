@@ -1,4 +1,6 @@
 @Timeout(Duration(seconds: 1))
+library brand_color_repository_test;
+
 import 'dart:async';
 
 import 'package:mock_datasource/brand_color/events.dart';
@@ -105,38 +107,40 @@ void main() {
     test('queryRecords test exception', () async {
       const query = BrandColorQuery();
 
-      expectLater(
+      await expectLater(
           db.brandColorRepository
               .queryRecords(query, batchSize: 10, raiseException: true),
           throwsA(const TypeMatcher<TestException>()));
     });
 
     test('createRecord test exception', () async {
-      expectLater(
+      await expectLater(
           db.brandColorRepository
               .createRecord(color: 0x111111, raiseException: true),
           throwsA(const TypeMatcher<TestException>()));
     });
 
     test('updateRecord test exception', () async {
-      expectLater(
+      await expectLater(
           db.brandColorRepository
               .updateRecord(1, color: 0x111111, raiseException: true),
           throwsA(const TypeMatcher<TestException>()));
     });
 
     test('updateRecord RecordDoesNotExist', () async {
-      expectLater(db.brandColorRepository.updateRecord(-1, color: 0x111111),
+      await expectLater(
+          db.brandColorRepository.updateRecord(-1, color: 0x111111),
           throwsA(const TypeMatcher<RecordDoesNotExist>()));
     });
 
     test('deleteRecord test exception', () async {
-      expectLater(db.brandColorRepository.deleteRecord(1, raiseException: true),
+      await expectLater(
+          db.brandColorRepository.deleteRecord(1, raiseException: true),
           throwsA(const TypeMatcher<TestException>()));
     });
 
     test('deleteRecord RecordDoesNotExist', () async {
-      expectLater(db.brandColorRepository.deleteRecord(-1),
+      await expectLater(db.brandColorRepository.deleteRecord(-1),
           throwsA(const TypeMatcher<RecordDoesNotExist>()));
     });
   });

@@ -1,4 +1,5 @@
 @Timeout(Duration(seconds: 2))
+library complec_value_notifier_test;
 
 import 'dart:async';
 import 'package:demo/examples/complex_value_notifier_list/complex_value_notifier_list_controller.dart';
@@ -55,21 +56,21 @@ void main() {
     test('should only add records that fits range', () async {
       final lastRecord = listController.value.records.last;
 
-      db.controller.transaction(() async {
+      unawaited(db.controller.transaction(() async {
         await db.exampleRecordRepository.createRecord(title: 'test', weight: 5);
         await db.exampleRecordRepository.createRecord(title: 'test', weight: 6);
         await db.exampleRecordRepository.createRecord(title: 'test', weight: lastRecord.weight + 106);
-      });
+      }));
       final state = await stream.first;
       expect(state.records.where((element) => element.title == 'test').length, 2);
     });
 
     test('should update records in list', () async {
-      db.controller.transaction(() async {
+      unawaited(db.controller.transaction(() async {
         await db.exampleRecordRepository.updateRecord(3, title: 'test');
         await db.exampleRecordRepository.updateRecord(4, title: 'test');
         await db.exampleRecordRepository.updateRecord(40, title: 'test');
-      });
+      }));
       final state = await stream.first;
       expect(state.records.where((element) => element.title == 'test').length, 2);
     });
@@ -77,37 +78,37 @@ void main() {
     test('should remove records from list', () async {
       const recordsToDelete = [4, 5];
       expect(listController.value.records.where((element) => recordsToDelete.contains(element.id)).length, recordsToDelete.length);
-      db.controller.transaction(() async {
+      unawaited(db.controller.transaction(() async {
         for (final id in recordsToDelete) {
           await db.exampleRecordRepository.deleteRecord(id);
         }
-      });
+      }));
       final state = await stream.first;
       expect(state.records.where((element) => recordsToDelete.contains(element.id)), isEmpty);
     });
 
     test('should not add records that do not fit range', () async {
       final lastRecord = listController.value.records.last;
-      db.controller.transaction(() async {
+      unawaited(db.controller.transaction(() async {
         await db.exampleRecordRepository.createRecord(title: 'test', weight: lastRecord.weight + 106);
         await db.exampleRecordRepository.createRecord(title: 'test', weight: lastRecord.weight + 107);
-      });
+      }));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
     });
 
     test('should not update or add records that do not fit range', () async {
-      db.controller.transaction(() async {
+      unawaited(db.controller.transaction(() async {
         await db.exampleRecordRepository.updateRecord(40, title: 'test');
         await db.exampleRecordRepository.updateRecord(41, title: 'test');
-      });
+      }));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
     });
 
     test('should not delete records that do not fit range', () async {
-      db.controller.transaction(() async {
+      unawaited(db.controller.transaction(() async {
         await db.exampleRecordRepository.deleteRecord(40);
         await db.exampleRecordRepository.deleteRecord(41);
-      });
+      }));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
     });
   });
@@ -130,17 +131,17 @@ void main() {
     tearDown(() => listController.dispose());
 
     test('add record', () async {
-      db.exampleRecordRepository.createRecord(title: 'test', weight: 1);
+      unawaited(db.exampleRecordRepository.createRecord(title: 'test', weight: 1));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
     });
 
     test('update record', () async {
-      db.exampleRecordRepository.updateRecord(5, title: 'test');
+      unawaited(db.exampleRecordRepository.updateRecord(5, title: 'test'));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
     });
 
     test('delete record', () async {
-      db.exampleRecordRepository.deleteRecord(6);
+      unawaited(db.exampleRecordRepository.deleteRecord(6));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
     });
   });
@@ -166,7 +167,7 @@ void main() {
     tearDown(() => listController.dispose());
 
     test('add record to first page', () async {
-      db.exampleRecordRepository.createRecord(title: 'test', weight: 2);
+      unawaited(db.exampleRecordRepository.createRecord(title: 'test', weight: 2));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
       var state = await stream.first;
       expect(state.isLoading, isFalse);
@@ -175,7 +176,7 @@ void main() {
     });
 
     test('update record in first page', () async {
-      db.exampleRecordRepository.updateRecord(7, title: 'test');
+      unawaited(db.exampleRecordRepository.updateRecord(7, title: 'test'));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
       var state = await stream.first;
       expect(state.isLoading, isFalse);
@@ -184,7 +185,7 @@ void main() {
     });
 
     test('delete record from first page', () async {
-      db.exampleRecordRepository.deleteRecord(8);
+      unawaited(db.exampleRecordRepository.deleteRecord(8));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
       var state = await stream.first;
       expect(state.isLoading, isFalse);
@@ -195,7 +196,7 @@ void main() {
     test('add record to being loaded page', () async {
       final record = listController.value.records.last;
       final newWeight = record.weight + 21;
-      db.exampleRecordRepository.createRecord(title: 'test', weight: newWeight);
+      unawaited(db.exampleRecordRepository.createRecord(title: 'test', weight: newWeight));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
       var state = await stream.first;
       expect(state.isLoading, isFalse);
@@ -204,7 +205,7 @@ void main() {
     });
 
     test('update record on being loaded page', () async {
-      db.exampleRecordRepository.updateRecord(defaultBatchSize + 3, title: 'test');
+      unawaited(db.exampleRecordRepository.updateRecord(defaultBatchSize + 3, title: 'test'));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
       var state = await stream.first;
       expect(state.isLoading, isFalse);
@@ -213,7 +214,7 @@ void main() {
     });
 
     test('delete record from being loaded page', () async {
-      db.exampleRecordRepository.deleteRecord(defaultBatchSize + 3);
+      unawaited(db.exampleRecordRepository.deleteRecord(defaultBatchSize + 3));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
       var state = await stream.first;
       expect(state.isLoading, isFalse);
@@ -270,14 +271,14 @@ void main() {
     expect(state.isLoading, isTrue);
     state = await stream.first;
     expect(state.isLoading, isFalse);
-    db.controller.transaction(() async {
+    unawaited(db.controller.transaction(() async {
       await db.exampleRecordRepository.updateRecord(2, title: 'test');
       await db.exampleRecordRepository.deleteRecord(2);
       final pk = await db.exampleRecordRepository.createRecord(weight: 15, title: 'creation test');
       await db.exampleRecordRepository.updateRecord(pk, title: 'creation test ex');
       await db.exampleRecordRepository.updateRecord(10, title: 'test 10');
       await db.exampleRecordRepository.updateRecord(20, title: 'test 20');
-    });
+    }));
     state = await stream.first;
     expect(
         state,

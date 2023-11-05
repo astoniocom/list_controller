@@ -77,12 +77,10 @@ class BrandColorRepository
   Future<void> updateRecord(ID id,
       {int? color, bool raiseException = false}) async {
     if (raiseException) throw TestException();
-    BrandColor record;
-    try {
-      record = _store.firstWhere((element) => element.id == id);
-    } on StateError {
-      throw RecordDoesNotExist();
-    }
+
+    final record = _store.firstWhere((element) => element.id == id,
+        orElse: () => throw RecordDoesNotExist());
+
     if (_store
         .where((element) => element != record && element.color == color)
         .isNotEmpty) throw ColorDuplicate();
@@ -96,12 +94,10 @@ class BrandColorRepository
 
   Future<void> deleteRecord(ID id, {bool raiseException = false}) async {
     if (raiseException) throw TestException();
-    BrandColor record;
-    try {
-      record = _store.firstWhere((element) => element.id == id);
-    } on StateError {
-      throw RecordDoesNotExist();
-    }
+
+    final record = _store.firstWhere((element) => element.id == id,
+        orElse: () => throw RecordDoesNotExist());
+
     _store.remove(record);
     db.notify(BrandColorDeletedEvent(id));
   }

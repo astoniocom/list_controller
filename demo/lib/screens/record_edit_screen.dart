@@ -115,7 +115,7 @@ class _RecordEditScreenState extends State<RecordEditScreen> {
         title: isEdit ? Text('Edit Record ${widget.record!.id}') : const Text('Create Record'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Form(
           key: RecordEditScreen.formKey,
           child: Column(
@@ -159,7 +159,7 @@ class _RecordEditScreenState extends State<RecordEditScreen> {
                   }),
                 ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 child: ElevatedButton(
                   key: RecordEditScreen.submitBtnKey,
                   onPressed: () async {

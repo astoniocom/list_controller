@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:demo/screens/record_edit_screen.dart';
 import 'package:demo/settings.dart';
 import 'package:flutter/material.dart';
@@ -50,12 +52,12 @@ void main() {
 
     final submit = find.byKey(RecordEditScreen.submitBtnKey);
 
-    expectLater(
+    unawaited(expectLater(
         db.controller.events
             .expand((element) => element)
             .asyncMap((recordEvent) => db.exampleRecordRepository.getRecordByPk(recordEvent.id))
             .map((record) => record.weight),
-        emits(5));
+        emits(5)));
 
     await tester.tap(submit);
   });
@@ -72,8 +74,8 @@ void main() {
     await tester.enterText(weightInput, '${testRecord.weight + 1}');
 
     final stream = db.controller.events.expand((element) => element).asyncMap((recordEvent) => db.exampleRecordRepository.getRecordByPk(recordEvent.id));
-    expectLater(stream.map((record) => record.weight), emits(testRecord.weight + 1));
-    expectLater(stream.map((record) => record.title == testRecord.title), emits(false));
+    unawaited(expectLater(stream.map((record) => record.weight), emits(testRecord.weight + 1)));
+    unawaited(expectLater(stream.map((record) => record.title == testRecord.title), emits(false)));
 
     final submit = find.byKey(RecordEditScreen.submitBtnKey);
     await tester.tap(submit);

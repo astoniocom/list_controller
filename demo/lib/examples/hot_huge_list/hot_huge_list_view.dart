@@ -1,4 +1,4 @@
-/// Idea taken from https://stackoverflow.com/questions/60074466/pagination-infinite-scrolling-in-flutter-with-caching-and-realtime-invalidatio
+// Idea taken from https://stackoverflow.com/questions/60074466/pagination-infinite-scrolling-in-flutter-with-caching-and-realtime-invalidatio
 import 'dart:math';
 
 import 'package:demo/examples/hot_huge_list/hot_huge_list_controller.dart';
@@ -70,7 +70,7 @@ class _HotHugeListExampleState extends State<HotHugeListExample> {
                 }
                 return SizedBox(
                   key: ValueKey('Shimmer $index'),
-                  height: 64.0,
+                  height: 64,
                   child: Shimmer.fromColors(
                     baseColor: Theme.of(context).colorScheme.primary,
                     highlightColor: Colors.yellow,

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:english_words/english_words.dart';
-import 'package:mock_datasource/brand_color/models.dart';
 import 'package:mock_datasource/brand_color/query.dart';
 import 'package:mock_datasource/brand_color/repository.dart';
 import 'package:mock_datasource/core/database_controller.dart';
@@ -100,33 +99,31 @@ class ExampleRecordRepository
       bool raiseException = false,
       int? Function()? colorId}) async {
     if (raiseException) throw TestException();
-    ExampleRecord record;
-    try {
-      record = _store.firstWhere((element) => element.id == id);
-    } on StateError {
-      throw RecordDoesNotExist();
-    }
+    final record = _store.firstWhere((element) => element.id == id,
+        orElse: () => throw RecordDoesNotExist());
     if (_store
         .where((element) => element != record && element.weight == weight)
         .isNotEmpty) throw WeightDuplicate();
     final storeIndex = _store.indexOf(record);
-    _store[storeIndex] = ExampleRecord(
+    final newRecord = ExampleRecord(
       id: id,
       title: title ?? record.title,
       weight: weight ?? record.weight,
       colorId: colorId != null ? colorId() : record.colorId,
     );
+
+    if (record == newRecord) return;
+    _store[storeIndex] = newRecord;
+
     db.notify(ExampleRecordUpdatedEvent(id));
   }
 
   Future<void> deleteRecord(ID id, {bool raiseException = false}) async {
     if (raiseException) throw TestException();
-    ExampleRecord record;
-    try {
-      record = _store.firstWhere((element) => element.id == id);
-    } on StateError {
-      throw RecordDoesNotExist();
-    }
+
+    final record = _store.firstWhere((element) => element.id == id,
+        orElse: () => throw RecordDoesNotExist());
+
     _store.remove(record);
     db.notify(ExampleRecordDeletedEvent(id));
   }
@@ -137,14 +134,11 @@ class ExampleRecordRepository
         records.map((r) => r.colorId).whereType<int>();
     final colors = await brandColorRepository
         .queryRecords(BrandColorQuery(idIn: colorIds));
+    final colorsRegister = {for (final c in colors) c.id: c};
     final List<ExpandedExampleRecord> result = [];
     for (final record in records) {
-      BrandColor? color;
-      try {
-        color = colors.firstWhere((element) => element.id == record.colorId);
-      } on StateError {
-        // pass
-      }
+      final color = colorsRegister[record.colorId];
+
       result.add(ExpandedExampleRecord(
         id: record.id,
         title: record.title,

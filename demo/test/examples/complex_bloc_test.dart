@@ -1,4 +1,5 @@
 @Timeout(Duration(seconds: 2))
+library complex_bloc_test;
 
 import 'dart:async';
 import 'package:bloc_test/bloc_test.dart';
@@ -55,11 +56,11 @@ void main() {
       act: (bloc) async {
         final state = await bloc.stream.where((event) => !event.isLoading).first; // Wait for list is loaded
         final lastRecord = state.records.last;
-        db.exampleRecordRepository.db.transaction(() async {
+        unawaited(db.exampleRecordRepository.db.transaction(() async {
           await db.exampleRecordRepository.createRecord(title: testRecordTitle, weight: 5);
           await db.exampleRecordRepository.createRecord(title: testRecordTitle, weight: 6);
           await db.exampleRecordRepository.createRecord(title: testRecordTitle, weight: lastRecord.weight + 106);
-        });
+        }));
         await bloc.stream.first;
       },
       expect: () => [
@@ -76,11 +77,11 @@ void main() {
       build: () => _defaultBlocBuilder(db: db),
       act: (bloc) async {
         await bloc.stream.where((event) => !event.isLoading).first; // Wait for list is loaded
-        db.exampleRecordRepository.db.transaction(() async {
+        unawaited(db.exampleRecordRepository.db.transaction(() async {
           await db.exampleRecordRepository.updateRecord(3, title: testRecordTitle);
           await db.exampleRecordRepository.updateRecord(4, title: testRecordTitle);
           await db.exampleRecordRepository.updateRecord(40, title: testRecordTitle);
-        });
+        }));
         await bloc.stream.first;
       },
       expect: () => [
@@ -95,13 +96,13 @@ void main() {
       build: () => _defaultBlocBuilder(db: db),
       act: (bloc) async {
         await bloc.stream.where((event) => !event.isLoading).first; // Wait for list is loaded
-        db.exampleRecordRepository.db.transaction(() async {
+        unawaited(db.exampleRecordRepository.db.transaction(() async {
           await db.exampleRecordRepository.updateRecord(3, title: testRecordTitle);
-        });
+        }));
         await bloc.stream.first;
-        db.exampleRecordRepository.db.transaction(() async {
+        unawaited(db.exampleRecordRepository.db.transaction(() async {
           await db.exampleRecordRepository.updateRecord(4, title: testRecordTitle);
-        });
+        }));
         await bloc.stream.first;
       },
       expect: () => [
@@ -118,11 +119,11 @@ void main() {
       build: () => _defaultBlocBuilder(db: db),
       act: (bloc) async {
         await bloc.stream.where((event) => !event.isLoading).first; // Wait for list is loaded
-        db.exampleRecordRepository.db.transaction(() async {
+        unawaited(db.exampleRecordRepository.db.transaction(() async {
           for (final id in recordsToDelete) {
             await db.exampleRecordRepository.deleteRecord(id);
           }
-        });
+        }));
         await bloc.stream.first;
       },
       expect: () => [
@@ -140,10 +141,10 @@ void main() {
       act: (bloc) async {
         final state = await bloc.stream.where((event) => !event.isLoading).first; // Wait for list is loaded
         final lastRecord = state.records.last;
-        db.exampleRecordRepository.db.transaction(() async {
+        unawaited(db.exampleRecordRepository.db.transaction(() async {
           await db.exampleRecordRepository.createRecord(title: testRecordTitle, weight: lastRecord.weight + 106);
           await db.exampleRecordRepository.createRecord(title: testRecordTitle, weight: lastRecord.weight + 107);
-        });
+        }));
         await Future.delayed(defaultFetchRecordsDelay);
       },
       expect: () => [
@@ -157,10 +158,10 @@ void main() {
       build: () => _defaultBlocBuilder(db: db),
       act: (bloc) async {
         await bloc.stream.where((event) => !event.isLoading).first; // Wait for list is loaded
-        db.exampleRecordRepository.db.transaction(() async {
+        unawaited(db.exampleRecordRepository.db.transaction(() async {
           await db.exampleRecordRepository.updateRecord(40, title: testRecordTitle);
           await db.exampleRecordRepository.updateRecord(41, title: testRecordTitle);
-        });
+        }));
         await Future.delayed(defaultFetchRecordsDelay);
       },
       expect: () => [
@@ -174,10 +175,10 @@ void main() {
       build: () => _defaultBlocBuilder(db: db),
       act: (bloc) async {
         await bloc.stream.where((event) => !event.isLoading).first; // Wait for list is loaded
-        db.exampleRecordRepository.db.transaction(() async {
+        unawaited(db.exampleRecordRepository.db.transaction(() async {
           await db.exampleRecordRepository.deleteRecord(40);
           await db.exampleRecordRepository.deleteRecord(41);
-        });
+        }));
         await Future.delayed(defaultFetchRecordsDelay);
       },
       expect: () => [
@@ -198,7 +199,7 @@ void main() {
       'add record',
       build: () => _defaultBlocBuilder(db: db, initLoad: false),
       act: (bloc) async {
-        db.exampleRecordRepository.createRecord(title: testRecordTitle, weight: 1);
+        await db.exampleRecordRepository.createRecord(title: testRecordTitle, weight: 1);
 
         await Future.delayed(defaultFetchRecordsDelay);
       },
@@ -209,7 +210,7 @@ void main() {
       'update record',
       build: () => _defaultBlocBuilder(db: db, initLoad: false),
       act: (bloc) async {
-        db.exampleRecordRepository.updateRecord(5, title: testRecordTitle);
+        await db.exampleRecordRepository.updateRecord(5, title: testRecordTitle);
         await Future.delayed(defaultFetchRecordsDelay);
       },
       expect: () => [],
@@ -219,7 +220,7 @@ void main() {
       'delete record',
       build: () => _defaultBlocBuilder(db: db, initLoad: false),
       act: (bloc) async {
-        db.exampleRecordRepository.deleteRecord(6);
+        await db.exampleRecordRepository.deleteRecord(6);
         await Future.delayed(defaultFetchRecordsDelay);
       },
       expect: () => [],
@@ -398,14 +399,14 @@ void main() {
     build: () => _defaultBlocBuilder(db: db),
     act: (bloc) async {
       await bloc.stream.where((event) => !event.isLoading).first;
-      db.controller.transaction(() async {
+      unawaited(db.controller.transaction(() async {
         await db.exampleRecordRepository.updateRecord(2, title: testRecordTitle);
         await db.exampleRecordRepository.deleteRecord(2);
         final pk = await db.exampleRecordRepository.createRecord(weight: 15, title: 'creation test');
         await db.exampleRecordRepository.updateRecord(pk, title: 'creation test ex');
         await db.exampleRecordRepository.updateRecord(10, title: 'test 10');
         await db.exampleRecordRepository.updateRecord(bloc.state.records.last.id + 3, title: 'test 20');
-      });
+      }));
       await bloc.stream.first;
     },
     expect: () => [
@@ -580,7 +581,7 @@ void main() {
       build: () => _defaultBlocBuilder(db: db, expandRecordsDelay: defaultFetchRecordsDelay ~/ 2),
       act: (bloc) async {
         await bloc.stream.where((event) => !event.isLoading).first; // Wait for list is loaded
-        db.exampleRecordRepository.updateRecord(0, title: testRecordTitle);
+        unawaited(db.exampleRecordRepository.updateRecord(0, title: testRecordTitle));
         await Future.delayed(defaultFetchRecordsDelay ~/ 3); // Be sure updating in progress
         bloc.loadNextPage();
         await bloc.stream.where((event) => event.isLoading).first;
@@ -604,9 +605,8 @@ void main() {
         await bloc.stream.where((event) => !event.isLoading).first; // Ensure list is loaded
         bloc.loadNextPage();
         await bloc.stream.where((event) => event.isLoading).first;
-        db.exampleRecordRepository
-          ..updateRecord(0, title: testRecordTitle)
-          ..updateRecord(1, title: testRecordTitle);
+        unawaited(db.exampleRecordRepository.updateRecord(0, title: testRecordTitle));
+        unawaited(db.exampleRecordRepository.updateRecord(1, title: testRecordTitle));
         await bloc.stream.where((event) => !event.isLoading).first;
         await bloc.stream.first;
       },
@@ -631,10 +631,10 @@ void main() {
         await bloc.stream.where((event) => !event.isLoading).first; // Ensure list is loaded
         bloc.loadNextPage();
         await bloc.stream.where((event) => !event.isLoading).first;
-        db.controller.transaction(() async {
+        unawaited(db.controller.transaction(() async {
           await db.exampleRecordRepository.updateRecord(0, title: testRecordTitle);
           await db.exampleRecordRepository.updateRecord(1, title: testRecordTitle);
-        });
+        }));
         await bloc.stream.first;
         // await bloc.stream.where((event) => !event.isLoading).first;
       },

@@ -1,1 +1,1 @@
-class WeightDuplicate extends Error {}
+class WeightDuplicate implements Exception {}

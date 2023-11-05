@@ -28,6 +28,6 @@ class ListStatusIndicator extends StatelessWidget {
       stateIndicator = const Text('No records to display', textAlign: TextAlign.center);
     }
 
-    return Container(height: 72.0, alignment: Alignment.center, child: stateIndicator);
+    return Container(height: 72, alignment: Alignment.center, child: stateIndicator);
   }
 }

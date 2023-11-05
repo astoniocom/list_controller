@@ -1,4 +1,6 @@
 @Timeout(Duration(seconds: 2))
+library repeating_queries_test;
+
 import 'package:demo/examples/repeating_queries/repeating_queries_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

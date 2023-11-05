@@ -1,3 +1,3 @@
-class RecordDoesNotExist extends Error {}
+class RecordDoesNotExist implements Exception {}
 
-class TestException extends Error {}
+class TestException implements Exception {}

@@ -1,3 +1,5 @@
+/// Database for testing various application functionality.
+
 library mock_datasource;
 
 export 'core/database_controller.dart';

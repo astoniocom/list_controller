@@ -40,6 +40,7 @@ void main() {
     await tester.tap(find.text('Test'));
     try {
       await tester.pumpAndSettle(const Duration(milliseconds: 100), EnginePhase.sendSemanticsUpdate, const Duration(milliseconds: 1000));
+      // ignore: avoid_catching_errors
     } on FlutterError {
       //
     }

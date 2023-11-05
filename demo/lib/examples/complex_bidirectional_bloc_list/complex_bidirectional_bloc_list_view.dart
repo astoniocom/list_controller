@@ -105,12 +105,12 @@ class ComplexBidirectionalBlocListExample extends StatelessWidget {
                             scrollController: scrollController,
                           );
 
-                          try {
+                          if (realIndex < listState.records.length) {
                             return RecordTeaser(
                               listState.records[realIndex],
                               height: kRecordTeaserHeight,
                             );
-                          } on RangeError {
+                          } else {
                             // We need it because
                             // - negativeItemCount and itemCount cannot have a negative values
                             // and BidirectionalListView build the items despite they are out of visible extents;
