@@ -1,4 +1,4 @@
-@Timeout(Duration(seconds: 1))
+import 'dart:async';
 
 import 'package:mock_datasource/mock_datasource.dart';
 import 'package:test/test.dart';
@@ -40,16 +40,19 @@ void main() {
     test('createRecord', () async {
       final ID id = await db.exampleRecordRepository
           .createRecord(title: 'test', weight: 5);
-      expect(
-          db.controller.events
-              .expand((element) => element)
-              .where((event) => event is RecordCreatedEvent<ID>)
-              .map((event) => event.id),
-          emits(id));
+
       expect(
           () => db.exampleRecordRepository.store
               .firstWhere((element) => element.id == id),
           returnsNormally);
+    });
+
+    test('createRecord notification', () async {
+      unawaited(
+          db.exampleRecordRepository.createRecord(title: 'test', weight: 5));
+
+      expect(db.controller.events.expand((element) => element),
+          emits(isA<ExampleRecordCreatedEvent>()));
     });
 
     test('create record with weight duplicity should throw exception',
@@ -66,29 +69,29 @@ void main() {
       const newTitle = 'newTitle';
       const newWeight = 11;
       const testPk = 10;
-      await db.exampleRecordRepository
-          .updateRecord(testPk, title: newTitle, weight: newWeight);
-      expect(
-          db.controller.events
-              .expand((element) => element)
-              .where((event) => event is RecordUpdatedEvent<ID>)
-              .map((event) => event.id),
-          emits(testPk));
+      unawaited(db.exampleRecordRepository
+          .updateRecord(testPk, title: newTitle, weight: newWeight));
+
       final record = await db.exampleRecordRepository.getRecordByPk(testPk);
       expect(record.title, newTitle);
       expect(record.weight, newWeight);
+    });
+
+    test('updateRecord notification', () async {
+      const newTitle = 'newTitle';
+      const newWeight = 11;
+      const testPk = 10;
+      unawaited(db.exampleRecordRepository
+          .updateRecord(testPk, title: newTitle, weight: newWeight));
+
+      expect(db.controller.events.expand((element) => element),
+          emits(ExampleRecordUpdatedEvent(testPk)));
     });
 
     test('updateRecord without changes', () async {
       const testPk = 10;
       final testRecord = await db.exampleRecordRepository.getRecordByPk(testPk);
       await db.exampleRecordRepository.updateRecord(testPk);
-      expect(
-          db.controller.events
-              .expand((element) => element)
-              .where((event) => event is RecordUpdatedEvent<ID>)
-              .map((event) => event.id),
-          emits(testPk));
       final record = await db.exampleRecordRepository.getRecordByPk(testPk);
       expect(record.title, testRecord.title);
       expect(record.weight, testRecord.weight);
@@ -97,12 +100,6 @@ void main() {
     test('deleteRecord', () async {
       const testPk = 10;
       await db.exampleRecordRepository.deleteRecord(testPk);
-      expect(
-          db.exampleRecordRepository.db.events
-              .expand((element) => element)
-              .where((event) => event is RecordDeletedEvent<ID>)
-              .map((event) => event.id),
-          emits(testPk));
 
       try {
         await db.exampleRecordRepository.getRecordByPk(testPk);
@@ -110,6 +107,13 @@ void main() {
       } catch (e) {
         expect(e, isA<RecordDoesNotExist>());
       }
+    });
+
+    test('deleteRecord notification', () async {
+      const testPk = 10;
+      unawaited(db.exampleRecordRepository.deleteRecord(testPk));
+      expect(db.exampleRecordRepository.db.events.expand((element) => element),
+          emits(ExampleRecordDeletedEvent(testPk)));
     });
 
     test('queryRecords delay', () async {

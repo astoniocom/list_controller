@@ -1,3 +1,7 @@
+@Timeout(Duration(seconds: 1))
+import 'dart:async';
+
+import 'package:mock_datasource/brand_color/events.dart';
 import 'package:mock_datasource/brand_color/query.dart';
 import 'package:mock_datasource/mock_datasource.dart';
 import 'package:test/test.dart';
@@ -29,42 +33,41 @@ void main() {
 
     test('createRecord', () async {
       final ID id = await db.brandColorRepository.createRecord(color: 0x111111);
-      expect(
-          db.controller.events
-              .expand((element) => element)
-              .where((event) => event is RecordCreatedEvent<ID>)
-              .map((event) => event.id),
-          emits(id));
+
       expect(
           () => db.brandColorRepository.store
               .firstWhere((element) => element.id == id),
           returnsNormally);
     });
 
+    test('createRecord notification', () async {
+      unawaited(db.brandColorRepository.createRecord(color: 0x111111));
+
+      expect(db.controller.events.expand((element) => element),
+          emits(isA<BrandColorCreatedEvent>()));
+    });
+
     test('updateRecord', () async {
       const newColor = 0x111111;
       const testPk = 5;
       await db.brandColorRepository.updateRecord(testPk, color: newColor);
-      expect(
-          db.controller.events
-              .expand((element) => element)
-              .where((event) => event is RecordUpdatedEvent<ID>)
-              .map((event) => event.id),
-          emits(testPk));
       final record = await db.brandColorRepository.getRecordByPk(testPk);
       expect(record.color, newColor);
+    });
+
+    test('updateRecord notification', () async {
+      const newColor = 0x111111;
+      const testPk = 5;
+      unawaited(db.brandColorRepository.updateRecord(testPk, color: newColor));
+
+      expect(db.controller.events.expand((element) => element),
+          emits(BrandColorUpdatedEvent(testPk)));
     });
 
     test('updateRecord without changes', () async {
       const testPk = 5;
       final testRecord = await db.brandColorRepository.getRecordByPk(testPk);
       await db.brandColorRepository.updateRecord(testPk);
-      expect(
-          db.controller.events
-              .expand((element) => element)
-              .where((event) => event is RecordUpdatedEvent<ID>)
-              .map((event) => event.id),
-          emits(testPk));
       final record = await db.brandColorRepository.getRecordByPk(testPk);
       expect(record.color, testRecord.color);
     });
@@ -72,12 +75,6 @@ void main() {
     test('deleteRecord', () async {
       const testPk = 5;
       await db.brandColorRepository.deleteRecord(testPk);
-      expect(
-          db.brandColorRepository.db.events
-              .expand((element) => element)
-              .where((event) => event is RecordDeletedEvent<ID>)
-              .map((event) => event.id),
-          emits(testPk));
 
       try {
         await db.brandColorRepository.getRecordByPk(testPk);
@@ -85,6 +82,13 @@ void main() {
       } catch (e) {
         expect(e, isA<RecordDoesNotExist>());
       }
+    });
+
+    test('deleteRecord notification', () async {
+      const testPk = 5;
+      unawaited(db.brandColorRepository.deleteRecord(testPk));
+      expect(db.controller.events.expand((element) => element),
+          emits(BrandColorDeletedEvent(testPk)));
     });
 
     test('queryRecords delay', () async {
