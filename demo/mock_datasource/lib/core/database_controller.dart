@@ -3,6 +3,11 @@ import 'dart:async';
 import 'package:mock_datasource/core/events.dart';
 
 class DatabaseController<KEY> {
+  DatabaseController() {
+    // What is the better way to prevent caching of events that occurred before
+    // the first subscription to [events].
+    _debugSubscription = events.listen((event) {});
+  }
   final List<RecordEvent<KEY>> eventBuffer = [];
 
   final StreamController<List<RecordEvent<KEY>>> eventController =
@@ -12,6 +17,8 @@ class DatabaseController<KEY> {
       eventController.stream.asBroadcastStream();
 
   bool isTransactionActive = false;
+
+  late StreamSubscription<List<RecordEvent<KEY>>> _debugSubscription;
 
   Future<T> dbTransaction<T>(Future<T> Function() action) async {
     return action();
@@ -37,5 +44,9 @@ class DatabaseController<KEY> {
     } else {
       eventController.add([event]);
     }
+  }
+
+  Future<void> close() async {
+    await _debugSubscription.cancel();
   }
 }

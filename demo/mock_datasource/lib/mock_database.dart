@@ -16,4 +16,8 @@ class MockDatabase {
   late DatabaseController<ID> controller;
   late ExampleRecordRepository exampleRecordRepository;
   late BrandColorRepository brandColorRepository;
+
+  Future<void> close() async {
+    await controller.close();
+  }
 }
