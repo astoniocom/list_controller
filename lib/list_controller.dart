@@ -1,3 +1,7 @@
+/// Tools for creating list controllers. Supports infinite scroll, pagination,
+/// lazy loading, sorting, filtering, synchronization, huge lists, etc.
+/// Independent of architecture and widgets used.
+
 library list_controller;
 
 export './exceptions.dart';

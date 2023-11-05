@@ -42,7 +42,7 @@ mixin KeysetPagination<Record, Query, LoadResult>
 
     // Don't include if list is empty here
     return !isRecordsLoading(loadingKey) &&
-        (isLoadSucessful(loadingKey) ?? true) == true &&
+        (isLoadSucessful(loadingKey) ?? true) &&
         listStage != ListStage.complete();
   }
 

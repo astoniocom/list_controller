@@ -19,7 +19,7 @@ void main() {
       controller.closeList();
 
       for (final r in records) {
-        r.close();
+        await r.close();
       }
     });
 

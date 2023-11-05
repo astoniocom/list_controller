@@ -28,7 +28,7 @@ void main() {
 
     tearDown(() async {
       controller.close();
-      eventController.close();
+      await eventController.close();
     });
 
     test(
@@ -41,7 +41,7 @@ void main() {
       when(controller.convertDecisionRecords(insertedIds))
           .thenAnswer((realInvocation) => Future.error(Exception()));
 
-      controller.stopLoading();
+      await controller.stopLoading();
 
       await Future.delayed(operationDuration * 2);
 
@@ -90,7 +90,7 @@ void main() {
             (realInvocation) =>
                 Future.delayed(operationDuration).then((_) => insertedIds));
 
-        controller.stopLoading();
+        unawaited(controller.stopLoading());
 
         await untilCalled(controller.convertDecisionRecords(insertedIds));
 
@@ -168,7 +168,7 @@ void main() {
             (realInvocation) =>
                 Future.delayed(operationDuration).then((_) => insertedIds));
 
-        controller.stopLoading();
+        unawaited(controller.stopLoading());
 
         await untilCalled(controller.convertDecisionRecords({1, 2, 3}));
 
@@ -243,7 +243,7 @@ void main() {
         const HotListChanges(recordKeysToRemove: {}, recordsToInsert: {1})));
     await untilCalled(controller.updateHotList(
         const HotListChanges(recordKeysToRemove: {}, recordsToInsert: {2})));
-    eventController.close();
+    await eventController.close();
   });
 
   test(
@@ -276,7 +276,7 @@ void main() {
 
     await completer.future;
     controller.close();
-    eventController.close();
+    await eventController.close();
 
     verifyNever(controller.convertDecisionRecords({1, 2, 3}));
     expect(wasError, isTrue);

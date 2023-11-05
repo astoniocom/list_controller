@@ -190,11 +190,8 @@ mixin HotList<Key, Event, DecisionRecord, Record> on ListCore<Record> {
   }
 
   DecisionRecord? _findRecordOrNull(Iterable<DecisionRecord> source, Key key) {
-    try {
-      return source.firstWhere((record) => getDecisionRecordKey(record) == key);
-    } on StateError {
-      return null;
-    }
+    return source
+        .firstWhereOrNull((record) => getDecisionRecordKey(record) == key);
   }
 
   /// Decides which records should be removed from the list and which

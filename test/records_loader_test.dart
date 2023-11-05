@@ -312,7 +312,7 @@ void main() {
 
         bool isLoadCompleted = false;
         controller.loadRecords(1);
-        controller
+        await controller
             .waitAllLoadsToComplete()
             .then((value) => isLoadCompleted = true);
         await Future.delayed(const Duration(milliseconds: 40));
@@ -347,11 +347,11 @@ void main() {
           finishedLoadings++;
         }
 
-        loadRequest(0);
-        loadRequest(1);
-        loadRequest(2);
-        loadRequest(3);
-        loadRequest(4);
+        unawaited(loadRequest(0));
+        unawaited(loadRequest(1));
+        unawaited(loadRequest(2));
+        unawaited(loadRequest(3));
+        unawaited(loadRequest(4));
 
         await controller.waitAllLoadsToComplete();
 
