@@ -15,7 +15,7 @@ class ExampleRecord extends RecordModel<ID> {
   final ID? colorId;
 
   @override
-  List<Object?> get props => [title, weight, colorId];
+  List<Object?> get props => [id, title, weight, colorId];
 }
 
 class ExpandedExampleRecord extends ExampleRecord {
