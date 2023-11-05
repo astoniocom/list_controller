@@ -3,23 +3,23 @@ import 'package:mock_datasource/core/events.dart';
 import 'package:mock_datasource/core/types.dart';
 
 abstract class ExampleRecordEvent extends RecordEvent<ID> {
-  const ExampleRecordEvent(super.pk) : super();
+  const ExampleRecordEvent(super.id) : super();
 }
 
 @immutable
 class ExampleRecordCreatedEvent extends ExampleRecordEvent
     with RecordCreatedEvent<ID> {
-  ExampleRecordCreatedEvent(super.pk) : super();
+  ExampleRecordCreatedEvent(super.id) : super();
 }
 
 @immutable
 class ExampleRecordUpdatedEvent extends ExampleRecordEvent
     with RecordUpdatedEvent<ID> {
-  ExampleRecordUpdatedEvent(super.pk) : super();
+  ExampleRecordUpdatedEvent(super.id) : super();
 }
 
 @immutable
 class ExampleRecordDeletedEvent extends ExampleRecordEvent
     with RecordDeletedEvent<ID> {
-  ExampleRecordDeletedEvent(super.pk) : super();
+  ExampleRecordDeletedEvent(super.id) : super();
 }
