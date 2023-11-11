@@ -42,10 +42,13 @@ class LoadingListStage extends ListStage {
 @immutable
 class ErrorListStage extends ListStage {
   /// Const constructor.
-  const ErrorListStage();
+  const ErrorListStage({this.error});
+
+  /// If necessary, used to store the original exception/error object.
+  final Object? error;
 
   @override
-  String toString() => 'ErrorListStage';
+  String toString() => 'ErrorListStage(error: $error)';
 }
 
 /// Stage indicating that the list is complete and has not any pages to load

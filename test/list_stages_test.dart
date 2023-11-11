@@ -7,7 +7,7 @@ void main() {
   });
 
   test('ErrorListStage [toString]', () {
-    expect(ListStage.error().toString(), 'ErrorListStage');
+    expect(ListStage.error().toString(), 'ErrorListStage(error: null)');
   });
 
   test('CompleteListStage [toString]', () {
