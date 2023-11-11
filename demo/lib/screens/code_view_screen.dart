@@ -12,9 +12,9 @@ class CodeViewScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Code'),
       ),
-      body: WidgetWithCodeView(
+      body: SourceCodeView(
         filePath: filePath,
-        codeLinkPrefix: 'https://github.com/astoniocom/list_controller/blob/master/demo',
+        codeLinkPrefix: 'https://github.com/astoniocom/list_controller/tree/master/demo',
       ),
     );
   }

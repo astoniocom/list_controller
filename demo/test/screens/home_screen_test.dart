@@ -38,7 +38,7 @@ void main() {
         final codeMenuItemsCount = codeMenuItems.evaluate().length;
 
         if (codeMenuItemsCount == 0) {
-          expect(find.byType(WidgetWithCodeView), findsOneWidget);
+          expect(find.byType(SourceCodeView), findsOneWidget);
           await tester.pageBack();
           await tester.pumpAndSettle();
         } else {
@@ -50,7 +50,7 @@ void main() {
             final menuItem = codeMenuItems.at(m);
             await tester.tap(menuItem);
             await tester.pumpAndSettle();
-            expect(find.byType(WidgetWithCodeView), findsOneWidget);
+            expect(find.byType(SourceCodeView), findsOneWidget);
             await tester.pageBack();
             await tester.pumpAndSettle();
           }
