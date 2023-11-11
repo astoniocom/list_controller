@@ -34,6 +34,7 @@ class LoadResult {
 
 const pageSize = 22;
 const totalRecords = 100;
+const clearOnFilter = false;
 
 class OffsetPaginationListController extends ValueNotifier<ExListState>
     with ListCore<int>, RecordsLoader<int, ListQuery, LoadResult>, OffsetPagination<int, ListQuery, LoadResult, int> {
@@ -48,13 +49,22 @@ class OffsetPaginationListController extends ValueNotifier<ExListState>
   }
 
   void loadNextPage() {
-    if (value.stage == ListStage.complete()) return;
+    // The range determination is based on records that have already been
+    // loaded, so there is no point in loading the next page if the loading
+    // process is not complete. There is also no point in loading the next page
+    // if the list is completely loaded.
+    if (value.stage == ListStage.loading() || value.stage == ListStage.complete()) return;
+
     final page = (value.records.length / min(pageSize, totalRecords)).ceil();
     loadPage(page);
   }
 
   void setNewQuery(ListQuery query) {
-    value = value.copyWith(query: query, records: null);
+    value = value.copyWith(
+      query: query,
+      records: clearOnFilter ? [] : value.records,
+      isInitialized: false,
+    );
 
     resetController();
 
@@ -90,7 +100,7 @@ class OffsetPaginationListController extends ValueNotifier<ExListState>
 
     value = value.copyWith(
       records: [
-        ...value.records,
+        if (loadingKey != RecordsLoader.defaultLoadingKey) ...value.records,
         ...loadResult.records,
       ],
       stage: loadResult.totalPages <= query.page + 1 ? ListStage.complete() : ListStage.idle(),

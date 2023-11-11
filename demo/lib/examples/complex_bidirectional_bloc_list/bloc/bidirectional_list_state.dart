@@ -8,8 +8,9 @@ class BidirectionalListState<Record, Query> {
     this.backwardStage = const IdleListStage(),
     this.forwardStage = const IdleListStage(),
     this.recordsOffset = 0,
-    List<Record>? records,
-  }) : _recordsStore = records;
+    this.records = const [],
+    this.isInitialized = false,
+  });
   /*{
     if (isInitialized && this.records.isEmpty && backwardStage != ListStage.complete() && forwardStage != ListStage.complete()) {
       throw const WrongListStateException('List is empty but has stage marker other than CompleteListStage');
@@ -17,30 +18,29 @@ class BidirectionalListState<Record, Query> {
   }*/
 
   final Query query;
-  final List<Record>? _recordsStore;
+  final List<Record> records;
   final ListStage backwardStage;
   final ListStage forwardStage;
   final int recordsOffset;
+  final bool isInitialized;
 
   BidirectionalListState<Record, Query> copyWith({
-    List<Record>? records = const DefaultList(),
+    List<Record>? records,
     ListStage? backwardStage,
     ListStage? forwardStage,
     Query? query,
     int? recordsOffset,
+    bool? isInitialized,
   }) {
     return BidirectionalListState<Record, Query>(
       recordsOffset: recordsOffset ?? this.recordsOffset,
       query: query ?? this.query,
-      records: records is DefaultList ? _recordsStore : records,
+      records: records ?? this.records,
       backwardStage: backwardStage ?? this.backwardStage,
       forwardStage: forwardStage ?? this.forwardStage,
+      isInitialized: isInitialized ?? (this.isInitialized || records != null),
     );
   }
-
-  List<Record> get records => _recordsStore ?? List<Record>.empty();
-
-  bool get isInitialized => _recordsStore != null;
 
   int get listLength => records.length;
 
@@ -59,6 +59,7 @@ class BidirectionalListState<Record, Query> {
   @override
   String toString() {
     return 'BidirectionalListState(recordsLength: $listLength, cachedLength: ${records.length}, '
-        'isInitialized: $isInitialized, backwardStage: $backwardStage, forwardStage: $forwardStage)';
+        'isInitialized: $isInitialized, backwardStage: $backwardStage, forwardStage: $forwardStage, '
+        'recordsOffset: $recordsOffset)';
   }
 }

@@ -8,6 +8,13 @@ void main() {
     expect(Wrapped.withNull().value, isNull);
   });
 
+  test('ListStateMeta constructor', () {
+    expect(
+        ListStateMeta(
+            isEmpty: true, stage: ListStage.idle(), isInitialized: false),
+        isA<ListStateMeta>());
+  });
+
   test('ListState [records]', () {
     expect(const ListState(query: 1).records, []);
   });
@@ -16,8 +23,14 @@ void main() {
     expect(const ListState(query: 1).isInitialized, isFalse);
   });
 
-  test('ListState [isInitialized] is true', () {
-    expect(const ListState(query: 1, records: [1, 2, 3]).isInitialized, isTrue);
+  test('ListState with records has false [isInitialized]', () {
+    expect(
+        const ListState(query: 1, records: [1, 2, 3]).isInitialized, isFalse);
+  });
+
+  test('ListState copied with records has true [isInitialized]', () {
+    expect(const ListState(query: 1).copyWith(records: [1, 2]).isInitialized,
+        isTrue);
   });
 
   test('ListState [isLoading]', () {
@@ -43,6 +56,15 @@ void main() {
             records: const [1, 2, 3], query: 2, stage: ListStage.error()),
         ListState(
             records: const [1, 2, 3], query: 2, stage: ListStage.error()));
+  });
+
+  test('ListState [isEmpty] is true', () {
+    expect(const ListState<int, int>(query: 1, records: []).isEmpty, true);
+  });
+
+  test('ListState [isEmpty] is false', () {
+    expect(
+        const ListState<int, int>(query: 1, records: [1, 2, 3]).isEmpty, false);
   });
 
   test('ListState [copyWith] without arguments', () {

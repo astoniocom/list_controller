@@ -23,6 +23,13 @@ class ListStateMeta {
 
   /// {@template list_controller.helpers.ListStateMeta.isInitialized}
   /// Whether the list is initialized.
+  ///
+  /// Typically, this means that the first data retrieval was successful
+  /// (even though the data itself might not have been there).
+  ///
+  /// However, a value of false does not always mean that the list is empty.
+  /// List entries may have been set by default or left over from a previous
+  /// list lifecycle.
   /// {@endtemplate}
   final bool isInitialized;
 }
@@ -33,15 +40,13 @@ class ListState<Record, Query> implements ListStateMeta {
   /// Creates a list state.
   const ListState({
     required this.query,
-    List<Record>? records,
+    this.records = const [],
     this.stage = const IdleListStage(),
-  }) : recordsStore = records;
+    this.isInitialized = false,
+  });
 
   /// Stores list records.
-  ///
-  /// If the list is not initialized, the value is null. If you want to have an
-  /// empty list instead of null, use [records].
-  final List<Record>? recordsStore;
+  final List<Record> records;
 
   /// Description of the criteria of the records included in the list.
   final Query query;
@@ -49,29 +54,36 @@ class ListState<Record, Query> implements ListStateMeta {
   @override
   final ListStage stage;
 
+  /// {@macro list_controller.helpers.ListStateMeta.isInitialized}
+  @override
+  final bool isInitialized;
+
   /// Creates a copy of this list state but with the given fields replaced with
   /// the new values.
+  ///
+  /// If the list is not initialised and [isInitialized] parameter is not
+  /// provided and new [records] are being provided,
+  /// the initialisation marker will be set automatically. Since this is almost
+  /// always the expected behaviour.
   ListState<Record, Query> copyWith({
-    List<Record>? records = const DefaultList(),
+    List<Record>? records,
     ListStage? stage,
     Query? query,
+    bool? isInitialized,
   }) {
     return ListState<Record, Query>(
-      records: records is DefaultList ? recordsStore : records,
+      records: records ?? this.records,
       stage: stage ?? this.stage,
       query: query ?? this.query,
+      isInitialized: isInitialized ?? (this.isInitialized || records != null),
     );
   }
-
-  /// Returns the list of records.
-  List<Record> get records => recordsStore ?? List<Record>.empty();
 
   /// Whether the list is at the stage of loading records.
   bool get isLoading => stage is LoadingListStage;
 
   @override
-  int get hashCode => Object.hash(
-      recordsStore != null ? recordsStore!.hashCode : null, stage, query);
+  int get hashCode => Object.hash(records, stage, query);
 
   @override
   bool operator ==(Object other) {
@@ -79,7 +91,7 @@ class ListState<Record, Query> implements ListStateMeta {
     if (other.runtimeType != runtimeType) return false;
     final eq = const ListEquality().equals;
     return other is ListState<Record, Query> &&
-        eq(recordsStore, other.recordsStore) &&
+        eq(records, other.records) &&
         query == other.query &&
         stage == other.stage;
   }
@@ -87,10 +99,6 @@ class ListState<Record, Query> implements ListStateMeta {
   /// {@macro list_controller.helpers.ListStateMeta.isEmpty}
   @override
   bool get isEmpty => records.isEmpty;
-
-  /// {@macro list_controller.helpers.ListStateMeta.isInitialized}
-  @override
-  bool get isInitialized => recordsStore != null;
 
   @override
   String toString() {

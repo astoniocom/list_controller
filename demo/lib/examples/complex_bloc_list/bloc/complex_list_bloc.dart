@@ -49,7 +49,8 @@ class ComplexListBloc extends Bloc<ListEvent, ExListState>
   void _onReset(ResetEvent<ExampleRecordQuery> event, Emitter<ExListState> emit) {
     emit(state.copyWith(
       query: event.query,
-      records: null,
+      records: [],
+      isInitialized: false,
     ));
 
     resetController();
