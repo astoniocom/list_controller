@@ -105,7 +105,7 @@ class ComplexBidirectionalBlocListExample extends StatelessWidget {
                             scrollController: scrollController,
                           );
 
-                          if (realIndex < listState.records.length) {
+                          if (realIndex < listState.records.length && realIndex >= 0) {
                             return RecordTeaser(
                               listState.records[realIndex],
                               height: kRecordTeaserHeight,
