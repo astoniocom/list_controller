@@ -1,12 +1,13 @@
 name: list_controller
-description: Tools for creating list controllers. Supports infinite scroll, pagination, lazy loading, sorting, filtering, synchronization, huge lists, etc. Independent of architecture and widgets used.
-version: 0.0.3
+description: Tools for creating list controllers. Supports infinite scroll, pagination, lazy loading, sorting, filtering, synchronization, huge lists, etc. Architecture and widgets agnostic.
+
+version: 0.1.0
 repository: https://github.com/astoniocom/list_controller
 issue_tracker: https://github.com/astoniocom/list_controller/issues
 homepage: https://github.com/astoniocom/list_controller
 
 environment:
-  sdk: ">=2.13.0 <3.0.0"
+  sdk: ">=2.15.0 <4.0.0"
 
 dependencies:
   async: ^2.5.0

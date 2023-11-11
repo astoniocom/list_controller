@@ -108,9 +108,10 @@ The library provides the class called `ListState` to store the state. You can us
 @immutable
 class ListState<Record, Query> {
   ListState({
-    required Query query,
-    List<Record>? records,
-    ListStage stage = const IdleListStage(),
+    required this.query,
+    this.records = const [],
+    this.stage = const IdleListStage(),
+    this.isInitialized = false,
   });
 }
 ```
@@ -120,6 +121,8 @@ class ListState<Record, Query> {
 `records` — the list of records;
 
 `stage` — stage the list is at. It may have a value: `ListStage.[idle/error/loading/complete]()`;
+
+`isInitialized` - whether the list is initialized. Typically, this means that the first data retrieval was successful.
 
 *This class will also be used in some of the examples below.*
 
