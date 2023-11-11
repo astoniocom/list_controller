@@ -16,7 +16,8 @@ void main() {
   });
 
   testWidgets('ListStatusIndicator indicates no results', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: ListStatusIndicator(listState: ListState(records: const [], stage: ListStage.complete(), query: null))));
+    await tester.pumpWidget(
+        MaterialApp(home: ListStatusIndicator(listState: ListState(records: const [], stage: ListStage.complete(), query: null, isInitialized: true))));
     final loader = find.text('No records to display');
     expect(loader, findsOneWidget);
   });
