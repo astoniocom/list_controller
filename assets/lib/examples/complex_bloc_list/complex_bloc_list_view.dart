@@ -32,7 +32,7 @@ class ComplexBlocListExample extends StatelessWidget {
           key: ValueKey(Object.hash(settingsController.value.batchSize, settingsController.value.recordsLoadThreshold)),
           create: (context) => ComplexListBloc(
             settings: context.read<SettingsController>(),
-            initialState: ExListState(query: const ExampleRecordQuery()),
+            initialState: const ExListState(query: ExampleRecordQuery()),
             repository: context.read<MockDatabase>().exampleRecordRepository,
           ),
           child: Builder(builder: (context) {

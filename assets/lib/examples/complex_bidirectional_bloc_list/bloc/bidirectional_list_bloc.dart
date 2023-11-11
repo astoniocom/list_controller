@@ -51,7 +51,8 @@ class BidirectionalListBloc extends Bloc<ListEvent, BidirectionalListStateEx>
   void _onReset(ResetEvent<ExampleRecordQuery> event, Emitter<BidirectionalListStateEx> emit) {
     emit(state.copyWith(
       query: event.query,
-      records: null,
+      records: [],
+      isInitialized: false,
       recordsOffset: 0,
     ));
 

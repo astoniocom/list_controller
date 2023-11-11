@@ -1,4 +1,4 @@
-/// Idea taken from https://stackoverflow.com/questions/60074466/pagination-infinite-scrolling-in-flutter-with-caching-and-realtime-invalidatio
+// Idea taken from https://stackoverflow.com/questions/60074466/pagination-infinite-scrolling-in-flutter-with-caching-and-realtime-invalidatio
 
 import 'package:demo/examples/huge_list/huge_list_controller.dart';
 import 'package:demo/models.dart';

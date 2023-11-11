@@ -12,7 +12,7 @@ class AnimatedListController extends ValueNotifier<ExListState>
   AnimatedListController(
     this.repository, {
     required this.onListChange,
-  }) : super(ExListState(query: const ExampleRecordQuery())) {
+  }) : super(const ExListState(query: ExampleRecordQuery())) {
     loadRecords(value.query);
 
     initHotList(repository.dbEvents);

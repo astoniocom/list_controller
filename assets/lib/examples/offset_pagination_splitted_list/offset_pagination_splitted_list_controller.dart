@@ -79,7 +79,7 @@ class OffsetPaginationSplittedListController extends ValueNotifier<SplittedListS
 
   @override
   void onRecordsLoadStart({required ExampleRecordQuery query, required LoadingKey loadingKey}) {
-    assert(query.page != null);
+    assert(query.page != null, 'Page number must be provided');
 
     final newPages = Map.of(value.pages);
     newPages[query.page!] = PageState(stage: ListStage.loading());
@@ -110,7 +110,7 @@ class OffsetPaginationSplittedListController extends ValueNotifier<SplittedListS
   /// This function is here to ignoreUnfinishedLoadings.
   @override
   void onRecordsLoadCancel({required ExampleRecordQuery query, required LoadingKey loadingKey}) {
-    assert(query.page != null);
+    assert(query.page != null, 'Page number must be provided');
 
     value = value.copyWith(
       pages: Map.of(value.pages)..remove(query.page),

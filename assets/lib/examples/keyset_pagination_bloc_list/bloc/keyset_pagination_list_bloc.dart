@@ -14,7 +14,7 @@ typedef KeysetPaginationListState = ListState<int, KeysetPaginationListQuery>;
 
 class KeysetPaginationListController extends Bloc<KeysetPaginationListEvent, KeysetPaginationListState>
     with ListCore<int>, RecordsLoader<int, KeysetPaginationListQuery, LoadResult>, KeysetPagination<int, KeysetPaginationListQuery, LoadResult> {
-  KeysetPaginationListController() : super(KeysetPaginationListState(query: const KeysetPaginationListQuery())) {
+  KeysetPaginationListController() : super(const KeysetPaginationListState(query: KeysetPaginationListQuery())) {
     on<KeysetPaginationListRecordsLoadStartEvent>(_onRecordsLoadStart);
     on<KeysetPaginationListPutLoadResultToStateEvent>(_onPutLoadResultToState);
     on<KeysetPaginationListLoadNextPageEvent>(_onLoadNextPage);

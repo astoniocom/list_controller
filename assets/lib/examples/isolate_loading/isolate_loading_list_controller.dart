@@ -110,7 +110,7 @@ class IsolateLoadingListController extends ValueNotifier<ListState> with ListCor
     final intermediateResultSubscription = receivePort.whereType<List<int>>().listen(completer.complete);
 
     final result = await completer.future;
-    intermediateResultSubscription.cancel();
+    await intermediateResultSubscription.cancel();
     receivePort.close();
     return result;
   }

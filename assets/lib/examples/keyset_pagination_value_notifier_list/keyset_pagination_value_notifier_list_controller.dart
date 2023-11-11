@@ -12,7 +12,7 @@ class LoadResult {
 
 class KeysetPaginationValueNotifierListController extends ValueNotifier<ExListState>
     with ListCore<int>, RecordsLoader<int, int, LoadResult>, KeysetPagination<int, int, LoadResult> {
-  KeysetPaginationValueNotifierListController() : super(ExListState(query: 0)) {
+  KeysetPaginationValueNotifierListController() : super(const ExListState(query: 0)) {
     loadRecords(value.query);
   }
 

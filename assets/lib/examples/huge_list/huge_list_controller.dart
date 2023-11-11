@@ -84,7 +84,7 @@ class HugeListController extends ValueNotifier<ListState>
     await Future.delayed(const Duration(milliseconds: 1500));
     final int from = query.page * pageSize;
 
-    assert(totalRecords >= from);
+    assert(totalRecords >= from, 'The requested range is not possible.');
 
     final int delta = query.filtering ? 10 : 1;
     final int realPageSize = min(pageSize, totalRecords - from);
