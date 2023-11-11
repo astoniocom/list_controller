@@ -6,6 +6,7 @@ import 'package:demo/examples/carousel_slider/carousel_slider_view.dart';
 import 'package:demo/examples/complex_bidirectional_bloc_list/complex_bidirectional_bloc_list_view.dart';
 import 'package:demo/examples/complex_bloc_list/complex_bloc_list_view.dart';
 import 'package:demo/examples/complex_value_notifier_list/complex_value_notifier_list_view.dart';
+import 'package:demo/examples/filtering_keyset_pagination_value_notifier_list/filtering_keyset_pagination_value_notifier_list_view.dart';
 import 'package:demo/examples/filtering_sorting/filtering_sorting_view.dart';
 import 'package:demo/examples/hot_huge_list/hot_huge_list_view.dart';
 import 'package:demo/examples/huge_list/huge_list_view.dart';
@@ -86,6 +87,21 @@ final List<Example> examples = [
     sources: const [
       SourceFile(title: 'Controller', codeFile: 'lib/examples/keyset_pagination_value_notifier_list/keyset_pagination_value_notifier_list_controller.dart'),
       SourceFile(title: 'View', codeFile: 'lib/examples/keyset_pagination_value_notifier_list/keyset_pagination_value_notifier_list_view.dart'),
+    ],
+  ),
+  Example(
+    title: 'Keyset Pagination ValueNotifier list with filter',
+    description: 'Implementation of keyset pagination list controller based on ValueNotifier. '
+        'Demonstrates an update of all list records showing previous list entries until a new list is loaded.',
+    usedFeatures: ['ValueNotifier', 'RecordsLoader', 'KeysetPagination'],
+    builder: (e, _) => FilteringKeysetPaginationValueNotifierListExample(title: e.title, sources: e.sources),
+    slug: 'filtering_keyset_pagination_value_notifier_list',
+    sources: const [
+      SourceFile(
+          title: 'Controller',
+          codeFile: 'lib/examples/filtering_keyset_pagination_value_notifier_list/filtering_keyset_pagination_value_notifier_list_controller.dart'),
+      SourceFile(
+          title: 'View', codeFile: 'lib/examples/filtering_keyset_pagination_value_notifier_list/filtering_keyset_pagination_value_notifier_list_view.dart'),
     ],
   ),
   Example(

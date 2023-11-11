@@ -64,6 +64,8 @@ flutter:
     - lib/examples/complex_bloc_list/complex_bloc_list_view.dart
     - lib/examples/complex_value_notifier_list/complex_value_notifier_list_controller.dart
     - lib/examples/complex_value_notifier_list/complex_value_notifier_list_view.dart
+    - lib/examples/filtering_keyset_pagination_value_notifier_list/filtering_keyset_pagination_value_notifier_list_controller.dart
+    - lib/examples/filtering_keyset_pagination_value_notifier_list/filtering_keyset_pagination_value_notifier_list_view.dart
     - lib/examples/filtering_sorting/filtering_sorting_list_controller.dart
     - lib/examples/filtering_sorting/filtering_sorting_view.dart
     - lib/examples/hot_huge_list/hot_huge_list_controller.dart
