@@ -48,6 +48,18 @@ class OffsetPaginationSplittedListExample extends StatelessWidget {
                     }
                     listController.goToPage(page);
                   },
+                  child: const SizedBox(
+                    height: 48,
+                    child: Row(
+                      children: [
+                        PrevButton(),
+                        Expanded(
+                          child: NumberContent(),
+                        ),
+                        NextButton(),
+                      ],
+                    ),
+                  ),
                 )
             ],
           );

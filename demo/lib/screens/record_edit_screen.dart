@@ -151,7 +151,7 @@ class _RecordEditScreenState extends State<RecordEditScreen> {
                   items: widget.db.brandColorRepository.store
                       .map((e) => DropdownMenuItem(
                             value: e.id,
-                            child: Container(width: 160, height: 42, color: Color(e.color).withOpacity(1)),
+                            child: Container(width: 160, height: 42, color: Color(e.color).withValues(alpha: 255)),
                           ))
                       .toList(),
                   onChanged: (value) => setState(() {
