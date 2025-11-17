@@ -8,7 +8,7 @@ abstract class BaseRepository<KEY, T, Query> {
 
   Future<List<T>> queryRecords(Query? query);
   Future<List<T>> getByIds(Iterable<KEY> ids);
-  Future<T> getRecordByPk(KEY id) async {
+  Future<T> getRecordByPk(KEY id) {
     return getByIds({id}).then((value) {
       if (value.isNotEmpty) return value.first;
       throw RecordDoesNotExist();

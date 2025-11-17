@@ -20,7 +20,7 @@ class DatabaseController<KEY> {
 
   late StreamSubscription<List<RecordEvent<KEY>>> _debugSubscription;
 
-  Future<T> dbTransaction<T>(Future<T> Function() action) async {
+  Future<T> dbTransaction<T>(Future<T> Function() action) {
     return action();
   }
 

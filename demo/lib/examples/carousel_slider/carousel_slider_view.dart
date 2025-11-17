@@ -1,4 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' hide CarouselSliderController;
 import 'package:demo/examples/carousel_slider/carousel_slider_controller.dart';
 import 'package:demo/models.dart';
 import 'package:demo/widgets/example_app_bar.dart';

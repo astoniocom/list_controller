@@ -65,7 +65,7 @@ class ComplexBlocListExample extends StatelessWidget {
                 ),
                 floatingActionButton: FloatingActionButton(
                   key: ComplexBlocListExample.createRecordBtnKey,
-                  onPressed: () async =>
+                  onPressed: () =>
                       RecordEditScreen.open(context: context, db: context.read<MockDatabase>(), settings: context.read<SettingsController>()),
                   tooltip: 'Create record',
                   child: const Icon(Icons.add),

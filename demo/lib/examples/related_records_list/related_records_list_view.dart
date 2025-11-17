@@ -66,7 +66,7 @@ class RelatedRecordsListExample extends StatelessWidget {
               ),
               floatingActionButton: FloatingActionButton(
                 key: RelatedRecordsListExample.createRecordBtnKey,
-                onPressed: () async =>
+                onPressed: () =>
                     RecordEditScreen.open(context: context, displayColor: true, db: context.read<MockDatabase>(), settings: context.read<SettingsController>()),
                 tooltip: 'Create record',
                 child: const Icon(Icons.add),

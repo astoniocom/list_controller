@@ -1,5 +1,5 @@
 @Timeout(Duration(seconds: 2))
-library complec_value_notifier_test;
+library complex_value_notifier_test;
 
 import 'dart:async';
 import 'package:demo/examples/complex_value_notifier_list/complex_value_notifier_list_controller.dart';
@@ -87,7 +87,7 @@ void main() {
       expect(state.records.where((element) => recordsToDelete.contains(element.id)), isEmpty);
     });
 
-    test('should not add records that do not fit range', () async {
+    test('should not add records that do not fit range', () {
       final lastRecord = listController.value.records.last;
       unawaited(db.controller.transaction(() async {
         await db.exampleRecordRepository.createRecord(title: 'test', weight: lastRecord.weight + 106);
@@ -96,7 +96,7 @@ void main() {
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
     });
 
-    test('should not update or add records that do not fit range', () async {
+    test('should not update or add records that do not fit range', () {
       unawaited(db.controller.transaction(() async {
         await db.exampleRecordRepository.updateRecord(40, title: 'test');
         await db.exampleRecordRepository.updateRecord(41, title: 'test');
@@ -104,7 +104,7 @@ void main() {
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
     });
 
-    test('should not delete records that do not fit range', () async {
+    test('should not delete records that do not fit range', () {
       unawaited(db.controller.transaction(() async {
         await db.exampleRecordRepository.deleteRecord(40);
         await db.exampleRecordRepository.deleteRecord(41);
@@ -130,17 +130,17 @@ void main() {
 
     tearDown(() => listController.dispose());
 
-    test('add record', () async {
+    test('add record', () {
       unawaited(db.exampleRecordRepository.createRecord(title: 'test', weight: 1));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
     });
 
-    test('update record', () async {
+    test('update record', () {
       unawaited(db.exampleRecordRepository.updateRecord(5, title: 'test'));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
     });
 
-    test('delete record', () async {
+    test('delete record', () {
       unawaited(db.exampleRecordRepository.deleteRecord(6));
       expect(() => stream.timeout(Duration.zero).first, throwsA(const TypeMatcher<TimeoutException>()));
     });

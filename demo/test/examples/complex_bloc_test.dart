@@ -1,6 +1,3 @@
-@Timeout(Duration(seconds: 2))
-library complex_bloc_test;
-
 import 'dart:async';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:demo/examples/complex_bloc_list/bloc/complex_list_bloc.dart';
@@ -36,7 +33,7 @@ void main() {
   blocTest<ComplexListBloc, dynamic>(
     'ListBloc should load initial records',
     build: () => _defaultBlocBuilder(db: MockDatabase(recodsNum: 100), fetchDelay: Duration.zero),
-    act: (bloc) async {},
+    act: (bloc) {},
     expect: () => [
       const TypeMatcher<ExListState>().having((p0) => p0.isLoading, 'isLoading', isTrue),
       const TypeMatcher<ExListState>().having((p0) => p0.isLoading, 'isLoaded', isFalse).having((p0) => p0.records.isNotEmpty, 'records.isNotEmpty', isTrue),
@@ -46,7 +43,7 @@ void main() {
   group('ListBloc with records', () {
     late MockDatabase db;
 
-    setUp(() async {
+    setUp(() {
       db = MockDatabase(recodsNum: 100);
     });
 
@@ -191,7 +188,7 @@ void main() {
   group('ListBloc without records should not', () {
     late MockDatabase db;
 
-    setUp(() async {
+    setUp(() {
       db = MockDatabase(recodsNum: 100);
     });
 
@@ -255,7 +252,7 @@ void main() {
     blocTest<ComplexListBloc, dynamic>(
       'add record to first page',
       build: () => _defaultBlocBuilder(db: db),
-      act: (bloc) async => actWhileSecondPageLoading(bloc, () => db.exampleRecordRepository.createRecord(title: testRecordTitle, weight: 2)),
+      act: (bloc) => actWhileSecondPageLoading(bloc, () => db.exampleRecordRepository.createRecord(title: testRecordTitle, weight: 2)),
       expect: () => [
         ...statesTillSecondPageLoaded,
         const TypeMatcher<ExListState>().having(
@@ -268,7 +265,7 @@ void main() {
     blocTest<ComplexListBloc, dynamic>(
       'update record in first page',
       build: () => _defaultBlocBuilder(db: db),
-      act: (bloc) async => actWhileSecondPageLoading(bloc, () => db.exampleRecordRepository.updateRecord(7, title: testRecordTitle)),
+      act: (bloc) => actWhileSecondPageLoading(bloc, () => db.exampleRecordRepository.updateRecord(7, title: testRecordTitle)),
       expect: () => [
         ...statesTillSecondPageLoaded,
         const TypeMatcher<ExListState>().having(
@@ -279,7 +276,7 @@ void main() {
     blocTest<ComplexListBloc, dynamic>(
       'delete record from first page',
       build: () => _defaultBlocBuilder(db: db),
-      act: (bloc) async => actWhileSecondPageLoading(bloc, () => db.exampleRecordRepository.deleteRecord(8)),
+      act: (bloc) => actWhileSecondPageLoading(bloc, () => db.exampleRecordRepository.deleteRecord(8)),
       expect: () => [
         ...statesTillSecondPageLoaded,
         const TypeMatcher<ExListState>().having((p0) => p0.records.getRange(0, defaultBatchSize).where((element) => element.id == 8), 'hasRecord', isEmpty),
@@ -290,10 +287,10 @@ void main() {
     blocTest<ComplexListBloc, dynamic>(
       'add record to being loaded page',
       build: () => _defaultBlocBuilder(db: db),
-      act: (bloc) async => actWhileSecondPageLoading(bloc, () {
+      act: (bloc) => actWhileSecondPageLoading(bloc, () async {
         final record = bloc.state.records.last;
         newWeight = record.weight + 21;
-        db.exampleRecordRepository.createRecord(title: testRecordTitle, weight: newWeight);
+        await db.exampleRecordRepository.createRecord(title: testRecordTitle, weight: newWeight);
       }),
       expect: () => [
         ...statesTillSecondPageLoaded,
@@ -307,7 +304,7 @@ void main() {
     blocTest<ComplexListBloc, dynamic>(
       'update record on being loaded page',
       build: () => _defaultBlocBuilder(db: db),
-      act: (bloc) async => actWhileSecondPageLoading(bloc, () => db.exampleRecordRepository.updateRecord(defaultBatchSize + 3, title: testRecordTitle)),
+      act: (bloc) => actWhileSecondPageLoading(bloc, () => db.exampleRecordRepository.updateRecord(defaultBatchSize + 3, title: testRecordTitle)),
       expect: () => [
         ...statesTillSecondPageLoaded,
         const TypeMatcher<ExListState>().having(
@@ -323,7 +320,7 @@ void main() {
     blocTest<ComplexListBloc, dynamic>(
       'delete record from being loaded page',
       build: () => _defaultBlocBuilder(db: db),
-      act: (bloc) async => actWhileSecondPageLoading(bloc, () => db.exampleRecordRepository.deleteRecord(defaultBatchSize + 3)),
+      act: (bloc) => actWhileSecondPageLoading(bloc, () => db.exampleRecordRepository.deleteRecord(defaultBatchSize + 3)),
       expect: () => [
         ...statesTillSecondPageLoaded,
         const TypeMatcher<ExListState>()

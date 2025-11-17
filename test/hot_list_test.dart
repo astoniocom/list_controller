@@ -261,12 +261,13 @@ void main() {
     ]..forEach(eventController.add);
     when(controller.expandHotListEvents(eventsToCall)).thenThrow(Exception());
 
-    runZonedGuarded(
-      () {
+    await runZonedGuarded(
+      () async {
         controller
           ..initHotList(eventController.stream)
           ..startLoading()
-          ..stopLoading();
+          ;
+        await controller.stopLoading();
       },
       (error, stack) {
         wasError = true;

@@ -43,11 +43,11 @@ class AnimatedListExample extends StatelessWidget {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            IconButton(onPressed: isActionsAvailable ? () async => _createRecord(context, record) : null, icon: const Icon(Icons.new_label)),
+            IconButton(onPressed: isActionsAvailable ? () => _createRecord(context, record) : null, icon: const Icon(Icons.new_label)),
             IconButton(
-                onPressed: isActionsAvailable ? () async => db.exampleRecordRepository.updateRecord(record.id, title: _randomNoun()) : null,
+                onPressed: isActionsAvailable ? () => db.exampleRecordRepository.updateRecord(record.id, title: _randomNoun()) : null,
                 icon: const Icon(Icons.edit)),
-            IconButton(onPressed: isActionsAvailable ? () async => db.exampleRecordRepository.deleteRecord(record.id) : null, icon: const Icon(Icons.delete)),
+            IconButton(onPressed: isActionsAvailable ? () => db.exampleRecordRepository.deleteRecord(record.id) : null, icon: const Icon(Icons.delete)),
           ],
         ),
       ),

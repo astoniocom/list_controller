@@ -68,7 +68,7 @@ class _ComplexExampleAppBarState extends State<ComplexExampleAppBar> {
                   icon: const Icon(Icons.search)),
               IconButton(
                 key: ComplexExampleAppBar.openSettingsBtnKey,
-                onPressed: () async => SettingsScreen.open(context: context, settings: context.read<SettingsController>()),
+                onPressed: () => SettingsScreen.open(context: context, settings: context.read<SettingsController>()),
                 icon: const Icon(Icons.settings_outlined),
               ),
               SourceButton(sources: widget.sources)

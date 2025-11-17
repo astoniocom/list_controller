@@ -125,7 +125,7 @@ class ComplexBidirectionalBlocListExample extends StatelessWidget {
                       ),
                     ),
                     floatingActionButton: FloatingActionButton(
-                      onPressed: () async => RecordEditScreen.open(
+                      onPressed: () => RecordEditScreen.open(
                         context: context,
                         db: context.read<MockDatabase>(),
                         settings: context.read<SettingsController>(),

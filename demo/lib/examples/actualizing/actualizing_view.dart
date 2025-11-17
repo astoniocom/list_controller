@@ -50,9 +50,9 @@ class ActualizingExample extends StatelessWidget {
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    IconButton(onPressed: () async => _createRecord(context, record), icon: const Icon(Icons.new_label)),
-                    IconButton(onPressed: () async => db.exampleRecordRepository.updateRecord(record.id, title: _randomNoun()), icon: const Icon(Icons.edit)),
-                    IconButton(onPressed: () async => db.exampleRecordRepository.deleteRecord(record.id), icon: const Icon(Icons.delete)),
+                    IconButton(onPressed: () => _createRecord(context, record), icon: const Icon(Icons.new_label)),
+                    IconButton(onPressed: () => db.exampleRecordRepository.updateRecord(record.id, title: _randomNoun()), icon: const Icon(Icons.edit)),
+                    IconButton(onPressed: () => db.exampleRecordRepository.deleteRecord(record.id), icon: const Icon(Icons.delete)),
                   ],
                 ),
               );

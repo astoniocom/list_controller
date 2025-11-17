@@ -42,7 +42,7 @@ void main() {
           returnsNormally);
     });
 
-    test('createRecord notification', () async {
+    test('createRecord notification', () {
       unawaited(db.brandColorRepository.createRecord(color: 0x111111));
 
       expect(db.controller.events.expand((element) => element),
@@ -57,7 +57,7 @@ void main() {
       expect(record.color, newColor);
     });
 
-    test('updateRecord notification', () async {
+    test('updateRecord notification', () {
       const newColor = 0x111111;
       const testPk = 5;
       unawaited(db.brandColorRepository.updateRecord(testPk, color: newColor));
@@ -81,12 +81,13 @@ void main() {
       try {
         await db.brandColorRepository.getRecordByPk(testPk);
         fail('record is not deleted');
+        // ignore: avoid_catches_without_on_clauses Ignore to test the exception type.
       } catch (e) {
         expect(e, isA<RecordDoesNotExist>());
       }
     });
 
-    test('deleteRecord notification', () async {
+    test('deleteRecord notification', () {
       const testPk = 5;
       unawaited(db.brandColorRepository.deleteRecord(testPk));
       expect(db.controller.events.expand((element) => element),

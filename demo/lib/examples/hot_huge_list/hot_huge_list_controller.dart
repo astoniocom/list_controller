@@ -51,7 +51,7 @@ class HotHugeListController extends ValueNotifier<ListState>
   void onRecordsLoadStart({required ExampleRecordQuery query, required LoadingKey loadingKey}) {}
 
   @override
-  Future<List<ExampleRecord>> performLoadQuery({required ExampleRecordQuery query, required LoadingKey loadingKey}) async {
+  Future<List<ExampleRecord>> performLoadQuery({required ExampleRecordQuery query, required LoadingKey loadingKey}) {
     return repository.queryRecords(
       query,
       batchSize: pageSize,

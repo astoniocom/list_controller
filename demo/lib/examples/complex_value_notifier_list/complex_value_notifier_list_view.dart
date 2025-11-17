@@ -65,7 +65,7 @@ class ComplexValueNotifierListExample extends StatelessWidget {
               ),
               floatingActionButton: FloatingActionButton(
                 key: ComplexValueNotifierListExample.createRecordBtnKey,
-                onPressed: () async => RecordEditScreen.open(context: context, db: context.read<MockDatabase>(), settings: context.read<SettingsController>()),
+                onPressed: () => RecordEditScreen.open(context: context, db: context.read<MockDatabase>(), settings: context.read<SettingsController>()),
                 tooltip: 'Create record',
                 child: const Icon(Icons.add),
               ),

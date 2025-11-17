@@ -32,7 +32,7 @@ class RecordTeaser extends StatelessWidget {
   Widget build(BuildContext context) {
     final db = context.read<MockDatabase>();
     Widget result = ListTile(
-      onTap: () async => RecordEditScreen.open(
+      onTap: () => RecordEditScreen.open(
         context: context,
         record: record,
         displayColor: record is ExpandedExampleRecord,
@@ -42,17 +42,17 @@ class RecordTeaser extends StatelessWidget {
       title: Text(
         record.title,
         style: record is ExpandedExampleRecord && (record as ExpandedExampleRecord).color != null
-            ? TextStyle(color: Color((record as ExpandedExampleRecord).color!.color).withOpacity(1))
+            ? TextStyle(color: Color((record as ExpandedExampleRecord).color!.color).withAlpha(255))
             : null,
       ),
       subtitle: Text('weight: ${record.weight}'),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(onPressed: () async => db.exampleRecordRepository.updateRecord(record.id, title: _randomNoun()), icon: const Icon(Icons.edit_outlined)),
+          IconButton(onPressed: () => db.exampleRecordRepository.updateRecord(record.id, title: _randomNoun()), icon: const Icon(Icons.edit_outlined)),
           IconButton(
             icon: const Icon(Icons.delete_outline),
-            onPressed: () async => _deleteRecord(context, record.id),
+            onPressed: () => _deleteRecord(context, record.id),
           ),
         ],
       ),

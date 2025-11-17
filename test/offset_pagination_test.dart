@@ -16,7 +16,7 @@ void main() {
 
     test(
         'calls [buildOffsetQuery] and [offsetToLoadingKey] when [loadPage] is '
-        'called', () async {
+        'called', () {
       controller.loadPage(1);
 
       verify(controller.buildOffsetQuery(1)).called(1);

@@ -47,7 +47,7 @@ void main() {
           returnsNormally);
     });
 
-    test('createRecord notification', () async {
+    test('createRecord notification', () {
       unawaited(
           db.exampleRecordRepository.createRecord(title: 'test', weight: 5));
 
@@ -77,7 +77,7 @@ void main() {
       expect(record.weight, newWeight);
     });
 
-    test('updateRecord notification', () async {
+    test('updateRecord notification', () {
       const newTitle = 'newTitle';
       const newWeight = 11;
       const testPk = 10;
@@ -104,12 +104,13 @@ void main() {
       try {
         await db.exampleRecordRepository.getRecordByPk(testPk);
         fail('record is not deleted');
+        // ignore: avoid_catches_without_on_clauses Ignore to test the exception type.
       } catch (e) {
         expect(e, isA<RecordDoesNotExist>());
       }
     });
 
-    test('deleteRecord notification', () async {
+    test('deleteRecord notification', () {
       const testPk = 10;
       unawaited(db.exampleRecordRepository.deleteRecord(testPk));
       expect(db.exampleRecordRepository.db.events.expand((element) => element),
